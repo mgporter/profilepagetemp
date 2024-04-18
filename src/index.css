@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  --background-color: #111111;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--background-color);
+  /* background-image: url("./images/branchesBW2.jpg");
+  background-size: 110%;
+  background-blend-mode: normal; */
+
+}
+
+.project_details_bubble {
+  background-color: var(--background-color);
+}
+
+div#container {
+  margin: 0;
+  max-width: 1200px;
+  display: grid;
+  grid-template-areas: "nv mn";
+  grid-template-columns: 29% 71%;
+  min-height: 100vh;
+  color:white;
+}
+
+nav {
+  grid-area: nv;
+}
+
+main {
+  grid-area: mn;
+}
+
+.bubblegrow {
+  animation: 0.3s linear 0s 1 backwards reverse running bubblegrow;
+}
+
+.project_delayed_fadein {
+  animation: 0.3s ease-in-out 0.3s 1 both normal running project_delayed_fadein;
+}
+
+.movingImg {
+  transition: all 1s 0.3s cubic-bezier(0.45, 0, 0.3, 1);
+  animation: 0.3s ease-in-out 0s 1 both normal running movingImgKeyframes;
+}
+
+@keyframes bubblegrow {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0.001);
+  }
+}
+
+@keyframes project_delayed_fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 100;
+  }
+}
+
+@keyframes movingImgKeyframes {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
