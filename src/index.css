@@ -8,7 +8,7 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  --background-color: #111111;
+  --background-color: #020714;
 }
 
 body {
@@ -21,6 +21,9 @@ body {
   background-color: var(--background-color);
   /* background-image: url("./images/branchesBW2.jpg");
   background-size: 110%;
+  background-attachment: fixed;
+  background-position: -300px 0px;
+  background-repeat: no-repeat;
   background-blend-mode: normal; */
 
 }

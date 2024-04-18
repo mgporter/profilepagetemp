@@ -13,6 +13,9 @@ export default function Main() {
 
   useEffect(() => {
     const unsubscribe = dispatcher.subscribe("projectTypeSelected", types => {
+
+        closeDetails();
+
         const projectsCopy = [...projects];
         if (types.length === 0) {
           projectsCopy.forEach(x => x.style = "default")
@@ -44,6 +47,9 @@ export default function Main() {
 
   useEffect(() => {
     const unsubscribe = dispatcher.subscribe("selectFeatured", () => {
+
+      closeDetails();
+
       const projectsCopy = [...projects];
       projectsCopy.forEach(x => x.featured ? x.style = "emphasized" : x.style = "faded");
       setProjectArray(projectsCopy);
@@ -77,6 +83,10 @@ export default function Main() {
 
   }
 
+  function closeDetails() {
+    setShowProject(null);
+  }
+
 
   return (
     <main 
@@ -88,7 +98,7 @@ export default function Main() {
         className="icon_holder flex w-full flex-wrap justify-center gap-6">
 
         {showProject && 
-          <ProjectDetails details={showProject} containerRef={mainViewRef} setShowProject={setShowProject} />}
+          <ProjectDetails details={showProject} containerRef={mainViewRef} closeDetails={closeDetails} />}
 
         {projectArray.map(x => <ProjectIcon key={x.name} project={x} />)}
 

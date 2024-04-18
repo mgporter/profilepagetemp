@@ -4,6 +4,8 @@ interface ProjectIconProps {
   project: Project;
 }
 
+const MAX_TYPES = 5;
+
 export default function ProjectIcon({ project }: ProjectIconProps) {
 
   return (
@@ -17,7 +19,7 @@ export default function ProjectIcon({ project }: ProjectIconProps) {
         opacity-0 group-hover:opacity-100 text-base">{project.name} {project.featured && "★"}</p>
 
       <div className="absolute bottom-1 left-1 z-20 text-xs flex gap-2 text-rose-100">
-        {project.types.map(type => (
+        {project.types.slice(0, MAX_TYPES).map(type => (
           <p key={type} className="bg-black/40 px-[2px] py-[1px] rounded-sm">{type}</p>
         ))}
       </div>

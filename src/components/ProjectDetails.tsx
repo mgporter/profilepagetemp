@@ -10,10 +10,10 @@ export interface DetailsProp {
 export interface ProjectDetailsProps {
   details: DetailsProp;
   containerRef: MutableRef<HTMLDivElement>;
-  setShowProject: (a: null) => void;
+  closeDetails: () => void;
 }
 
-export default function ProjectDetails({details, containerRef, setShowProject}: ProjectDetailsProps) {
+export default function ProjectDetails({details, containerRef, closeDetails}: ProjectDetailsProps) {
 
   const largeImgRef = useRef<HTMLImageElement>(null!);
   const movingImgRef = useRef<HTMLImageElement>(null!);
@@ -57,10 +57,6 @@ export default function ProjectDetails({details, containerRef, setShowProject}: 
     top: rect.top - mainTop, 
     width: rect.width, 
     height: rect.height,
-  }
-
-  function closeDetails() {
-    setShowProject(null);
   }
 
   return (

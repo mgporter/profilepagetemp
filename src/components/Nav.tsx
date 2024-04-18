@@ -5,18 +5,28 @@ import { dispatcher } from "./Dispatcher";
 import { ProjectType } from "./PROJECTS";
 
 const project_type_selection = 
-  "project_type_selection hover:bg-gradient-to-r hover:from-white/50 hover:to-white/0 \
-  cursor-pointer"
+  "project_type_selection tracking-wide \
+  hover:bg-gradient-to-r hover:from-white/50 hover:to-white/0 hover:tracking-normal hover:text-white \
+  active:from-white/70 active:scale-[101%] \
+  rounded-sm \
+  hover:font-semibold \
+  cursor-pointer px-2 py-1 "
+
+const activeStyle = 
+  "bg-gradient-to-r from-white/50 from-30% to-white/0 tracking-normal text-white"
 
 export default function Nav() {
 
-  const [selectedType, setSelectedType] = useState("test");
+  const [active, setActive] = useState("all");
 
   function selectProject(types: ProjectType[]) {
+    if (types.length > 0) setActive(types[0]);
+    else setActive("all");
     dispatcher.dispatch("projectTypeSelected", types);
   }
 
   function selectFeatured() {
+    setActive("featured");
     dispatcher.dispatch("selectFeatured", null);
   }
 
@@ -37,16 +47,16 @@ export default function Nav() {
           </a>
         </div>
         
-        <h2 className="text-xl mb-2">Projects:</h2>
-        <ul className="text-base ml-4 w-[70%]">
-          <li className={project_type_selection} onClick={() => selectProject([])}>All</li>
-          <li className={project_type_selection} onClick={() => selectFeatured()}>Featured</li>
-          <li className={project_type_selection} onClick={() => selectProject(["React", "Preact"])}>React / Preact</li>
-          <li className={project_type_selection} onClick={() => selectProject(["TypeScript"])}>Typescript</li>
-          <li className={project_type_selection} onClick={() => selectProject(["Java"])}>Java</li>
-          <li className={project_type_selection} onClick={() => selectProject(["C++"])}>C++</li>
-          <li className={project_type_selection} onClick={() => selectProject(["WebAssembly"])}>WebAssembly</li>
-          <li className={project_type_selection} onClick={() => selectProject(["Javascript"])}>Vanilla JS</li>
+        <h2 className="text-xl text-slate-400 font-bold mb-2 border-b w-full">Projects:</h2>
+        <ul className="flex flex-col text-base text-slate-200 ml-4 w-full">
+          <li className={project_type_selection + (active === "all" ? activeStyle : "")} onClick={() => selectProject([])}>All</li>
+          <li className={project_type_selection + (active === "featured" ? activeStyle : "")} onClick={() => selectFeatured()}>Featured</li>
+          <li className={project_type_selection + (active === "React" ? activeStyle : "")} onClick={() => selectProject(["React", "Preact"])}>React / Preact</li>
+          <li className={project_type_selection + (active === "TypeScript" ? activeStyle : "")} onClick={() => selectProject(["TypeScript"])}>Typescript</li>
+          <li className={project_type_selection + (active === "Java" ? activeStyle : "")} onClick={() => selectProject(["Java"])}>Java</li>
+          <li className={project_type_selection + (active === "C++" ? activeStyle : "")} onClick={() => selectProject(["C++"])}>C++</li>
+          <li className={project_type_selection + (active === "WebAssembly" ? activeStyle : "")} onClick={() => selectProject(["WebAssembly"])}>WebAssembly</li>
+          <li className={project_type_selection + (active === "JavaScript" ? activeStyle : "")} onClick={() => selectProject(["Javascript"])}>Vanilla JS</li>
         </ul>
 
       </div>
