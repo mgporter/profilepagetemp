@@ -21,7 +21,7 @@ import wordle_wrangler_gif from "../images/java03_wordlewrangler.gif";
 
 import { VNode } from "preact";
 
-const inlinePictureBig = "border-2 border-slate-400 w-[90%] self-center";
+// const inlinePictureBig = "border-2 border-slate-400 w-[90%] self-center";
 
 export type ProjectType = "Javascript" 
   | "TypeScript" 

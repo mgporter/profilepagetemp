@@ -3,7 +3,6 @@ import githubLogo from "../images/github-logo.png";
 import linkedinLogo from "../images/Linkedin_logo.png";
 import { dispatcher } from "./Dispatcher";
 import { ProjectType } from "./PROJECTS";
-import profilePic from "../images/profile_picture.jpg";
 import profileColorPic from "../images/profile_picture_color.jpg";
 
 const project_type_selection = 

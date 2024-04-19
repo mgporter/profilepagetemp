@@ -1,4 +1,4 @@
-import { MutableRef, useEffect, useLayoutEffect, useRef } from "preact/hooks";
+import { MutableRef, useLayoutEffect, useRef } from "preact/hooks";
 import { Project } from "./PROJECTS";
 import { ProjectDetailsPage } from "./ProjectDetailsPage";
 
