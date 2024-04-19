@@ -90,7 +90,7 @@ export default function Main() {
 
   return (
     <main 
-      className="relative py-48 overflow-hidden"
+      className="relative py-48 sm:pt-12 sm:pb-48 overflow-hidden"
       ref={mainViewRef}>
 
       <div

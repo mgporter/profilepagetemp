@@ -6,6 +6,10 @@ export default {
   ],
   theme: {
     extend: {},
+    screens: {
+      'md': {'max': '1024px'},
+      'sm': {'max': '720px'}
+    }
   },
   plugins: [],
 }

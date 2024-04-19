@@ -32,9 +32,9 @@ export default function Nav() {
   }
 
   return (
-    <nav>
+    <nav className="flex flex-col items-center">
 
-      <div className="flex flex-col items-start fixed">
+      <div className="flex flex-col items-start fixed sm:static sm:max-w-[30rem]">
 
         <div className="relative z-10 size-48 self-center mt-8 mb-[-48px]">
           <img src={profileColorPic} className="relative rounded-[100%] z-20"></img>
@@ -56,7 +56,7 @@ export default function Nav() {
         </div>
         
         <h2 className="text-xl text-slate-400 font-bold mb-2 border-b w-full">Projects:</h2>
-        <ul className="flex flex-col text-base text-slate-200 ml-4 w-full">
+        <ul className="flex flex-col flex-wrap text-base text-slate-200 ml-4 w-full sm:h-[10rem]">
           <li className={project_type_selection + (active === "all" ? activeStyle : "")} onClick={() => selectProject([])}>All</li>
           <li className={project_type_selection + (active === "featured" ? activeStyle : "")} onClick={() => selectFeatured()}>Featured</li>
           <li className={project_type_selection + (active === "React" ? activeStyle : "")} onClick={() => selectProject(["React", "Preact"])}>React / Preact</li>

@@ -51,9 +51,8 @@ export const ProjectDetailsPage = forwardRef((props: ProjectDetailsPageProps, re
 
       {/* This marks the final location of the movingImg. It is not shown directly. */}
       <img ref={ref} src={project.imageSrc} alt={project.name} className="opacity-0"></img>
-      {/* <div ref={ref} className="opacity-0 w-full" style={{aspectRatio: project.imageAspectRatio + ""}}></div> */}
 
-      <ul className="flex items-center bg-white/10 mx-8 mb-4 p-2 gap-4">
+      <ul className="flex items-center bg-white/10 mx-8 sm:mx-2 flex-wrap mb-4 p-2 gap-4">
         <li className="px-2">Tech stack:</li>
         {project.types.map(type => (
           <li className="bg-sky-300/30 px-2 py-1 rounded-md">{type}</li>

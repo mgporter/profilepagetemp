@@ -33,13 +33,23 @@ body {
 }
 
 div#container {
-  margin: 0;
+  margin: 0 1rem;
   max-width: 1200px;
   display: grid;
   grid-template-areas: "nv mn";
-  grid-template-columns: 29% 71%;
+  grid-template-columns: 22rem auto;
   min-height: 100vh;
   color:white;
+}
+
+@media screen and (max-width: 720px) {
+  div#container {
+    margin: 0;
+    display: grid;
+    grid-template-areas: "nv" "mn";
+    grid-template-columns: auto;
+    grid-template-rows: 1fr, 1fr;
+  }
 }
 
 nav {
