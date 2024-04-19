@@ -13,9 +13,15 @@ import tic_tac_toe_image from "../screenshots/top05_screenshot.png";
 import book_library_image from "../screenshots/top04_screenshot.png";
 import calculator_image from "../screenshots/top03_screenshot.png";
 import etch_a_sketch_image from "../screenshots/top02_screenshot.png";
-import rps_game_image from "../screenshots/top01_screenshot.png"; 
-import mgporter_image from "../images/profile_picture_narrow.jpg";
+import rps_game_image from "../screenshots/top01_screenshot.png";
+import audiveris_image from "../screenshots/audiveris_logo.png";
+
+import knights_travails_gif from "../images/java01_knights-travails.gif";
+import wordle_wrangler_gif from "../images/java03_wordlewrangler.gif";
+
 import { VNode } from "preact";
+
+const inlinePictureBig = "border-2 border-slate-400 w-[90%] self-center";
 
 export type ProjectType = "Javascript" 
   | "TypeScript" 
@@ -27,6 +33,8 @@ export type ProjectType = "Javascript"
   | "WebSockets" 
   | "Three.js" 
   | "Database" 
+  | "Open-Source Contributor"
+  | "Swing"
   | "Beginner";
 
 export type ProjectStyle = "emphasized" | "faded" | "default";
@@ -46,26 +54,26 @@ export interface Project {
 }
 
 const projects: Project[] = [
-  {
-    name: "About me",
-    id: Number.MAX_SAFE_INTEGER,
-    style: "default",
-    types: [],
-    featured: false,
-    imageThumbnailSrc: mgporter_image,
-    imageSrc: mgporter_image,
-    livePreviewUrl: "https://mgporter.github.io/",
-    sourceUrl: "https://github.com/mgporter/",
-    heading: "About me",
-    description: 
-      <>
-        <p>Allows users to upload a picture, process it, and save the results back to disk.</p>
-        <p>Utilizes C++ code compiled to WebAssembly with emscripten to accelerate image processing (it only does a gaussian blur right now though).</p>
-        <p>Data is transferred using Javascript's ArrayBuffers (or pointers to ArrayBuffers). The program manages the WebAssembly memory manually (that is, without using emscripten's 'glue code') in order to keep the wasm code size small (~1,299 bytes).</p>
-        <p>Performance of calculation time and overhead time is measured on each run. Even with its extra overhead, the WebAssembly module easily beats the Javascript implementation by a factor of 10.</p>
-        <p>Javascript's Web Workers API is used in order to keep the thread responsive during calculations.</p>
-      </>,
-  },
+  // {
+  //   name: "About me",
+  //   id: Number.MAX_SAFE_INTEGER,
+  //   style: "default",
+  //   types: [],
+  //   featured: false,
+  //   imageThumbnailSrc: mgporter_image,
+  //   imageSrc: mgporter_image,
+  //   livePreviewUrl: "https://mgporter.github.io/",
+  //   sourceUrl: "https://github.com/mgporter/",
+  //   heading: "About me",
+  //   description: 
+  //     <>
+  //       <p>Allows users to upload a picture, process it, and save the results back to disk.</p>
+  //       <p>Utilizes C++ code compiled to WebAssembly with emscripten to accelerate image processing (it only does a gaussian blur right now though).</p>
+  //       <p>Data is transferred using Javascript's ArrayBuffers (or pointers to ArrayBuffers). The program manages the WebAssembly memory manually (that is, without using emscripten's 'glue code') in order to keep the wasm code size small (~1,299 bytes).</p>
+  //       <p>Performance of calculation time and overhead time is measured on each run. Even with its extra overhead, the WebAssembly module easily beats the Javascript implementation by a factor of 10.</p>
+  //       <p>Javascript's Web Workers API is used in order to keep the thread responsive during calculations.</p>
+  //     </>,
+  // },
   {
     name: "Wasm Image Processor",
     id: 160,
@@ -127,21 +135,39 @@ const projects: Project[] = [
       </>,
   },
   {
+    name: "Audiveris",
+    id: 160,
+    style: "default",
+    types: ["Java", "Swing", "Open-Source Contributor"],
+    featured: false,
+    imageThumbnailSrc: audiveris_image,
+    imageSrc: audiveris_image,
+    livePreviewUrl: null,
+    sourceUrl: "https://github.com/Audiveris/audiveris",
+    heading: "Written by Hervé Bitteur, Audiveris converts images of sheet music to MusicXML format.",
+    description: 
+      <>
+        <p>My contributions include UI and usability updates. Audiveris is an application long in development and now consists of ~400,000 lines, so it presents numerous challenges to contributors.</p>
+        <p>I worked on UI elements related to binarization (conversion of images to black and white). My binarization UI elements tie into the processing engine to allow quick editing of binarization settings and real-time updated views.</p>
+      </>,
+  },
+  {
     name: "Wordle Wrangler",
     id: 130,
     style: "default",
     types: ["Java"],
     featured: false,
     imageThumbnailSrc: wordle_wrangler_image,
-    imageSrc: wordle_wrangler_image,
+    imageSrc: wordle_wrangler_gif,
     livePreviewUrl: null,
     sourceUrl: "https://github.com/mgporter/java03_wordle-wrangler",
     heading: "My mom likes to play Wordle, so I created a program to help me beat her at it ;)",
     description:
       <>
-        <p>After trying a word in Wordle, type it into this program to get a list of all possible words that would fit. The program also remembers what letters/words were acceptable/invalid in previous attempts, so that it can quickly narrow down the word.</p>
-        <p>Uses Iterator and Stream classes to efficiently process and filter the &gt;69,000 words in the dictionary.</p>
-        <p>Handles fringe cases, such as when double letters appear and one is valid but the other is not.</p>
+        <p>Wordle Wrangler works by first inputting the target word, and then inputting the result, using CAPITAL LETTERS for green, lowercase letters for yellow, and ??? for gray.</p>
+        <p>See it in action above!</p>
+        <p>Under the hood, the wrangler uses Iterator and Stream classes to efficiently process and filter the &gt;69,000 words in the dictionary.</p>
+        <p>It also handles fringe cases, such as when double letters appear and one is valid but the other is not.</p>
         <p>Uses colorized console text and instructions for guided input, and provides helpful warning messages to teach the user to provide correct input.</p>
       </>,
   },
@@ -173,16 +199,16 @@ const projects: Project[] = [
     types: ["Java"],
     featured: false,
     imageThumbnailSrc: knights_travails_image,
-    imageSrc: knights_travails_image,
+    imageSrc: knights_travails_gif,
     livePreviewUrl: null,
     sourceUrl: "https://github.com/mgporter/java01_knights-travails",
     heading: "An algorithm to find the shortest path for a chess knight to move between any two squares.",
     description:
       <>
-        <p>Called with parameters: KnightsTravails &lt;startingRow&gt; &lt;startingColumn&gt; &lt;endingRow&gt; &lt;endingColumn&gt;.</p>
-        <p>Uses a breadth-first search algorithm to find the fewest number of jumps a knight would take from &lt;startingRow&gt; &lt;startingColumn&gt; to &lt;endingRow&gt; &lt;endingColumn&gt;.</p>
-        <p>Throws helpful errors to the user when given incorrect input.</p>
-        <p>Uses the LinkedList, ArrayList, and HashMap data structures.</p>
+        <p>To use Knights Travails, we call the program with four arguments: the startingRow, the startingColumn, the endingRow, and the endingColumn.</p>
+        <p>This program uses a breadth-first search algorithm to find the fewest number of jumps a knight would take from the start square to the ending square</p>
+        <p>Throws helpful errors to the user when given incorrect input. Notice in the gif how the user gets an error when an invalid square is inputted.</p>
+        <p>Uses basic java.util data structures.</p>
       </>,
   },
   {

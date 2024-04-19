@@ -3,6 +3,8 @@ import githubLogo from "../images/github-logo.png";
 import linkedinLogo from "../images/Linkedin_logo.png";
 import { dispatcher } from "./Dispatcher";
 import { ProjectType } from "./PROJECTS";
+import profilePic from "../images/profile_picture.jpg";
+import profileColorPic from "../images/profile_picture_color.jpg";
 
 const project_type_selection = 
   "project_type_selection tracking-wide \
@@ -34,15 +36,22 @@ export default function Nav() {
     <nav>
 
       <div className="flex flex-col items-start fixed">
-        <h1 className="text-7xl mb-8">mgporter</h1>
 
-        <div className="flex flex-col gap-1 mb-12 text-lg">
-          <a className="flex items-center gap-2" href="https://github.com/mgporter">
-            <img src={githubLogo} alt="Github profile" className="size-6 invert"></img>
+        <div className="relative z-10 size-48 self-center mt-8 mb-[-48px]">
+          <img src={profileColorPic} className="relative rounded-[100%] z-20"></img>
+          <div className="absolute z-10 top-8 left-8 size-56 skew-x-12 rounded-[100%] blur-lg bg-gray-800"></div>
+        </div>
+        
+
+        <h1 className="relative z-20 text-7xl mb-8 text-slate-400 self-center">mgporter</h1>
+
+        <div className="relative z-20 flex flex-col gap-1 mb-12 text-slate-300 text-lg ">
+          <a className="flex group items-center gap-2 hover:text-slate-100" href="https://github.com/mgporter" target="_blank">
+            <img src={githubLogo} alt="Github profile" className="size-6 invert-[0.9] group-hover:invert"></img>
             <h2>https://github.com/mgporter</h2>
           </a>
-          <a className="flex items-center gap-2" href="https://linkedin.com/in/mgporter772">
-            <img src={linkedinLogo} alt="LinkedIn profile" className="size-6"></img>
+          <a className="flex group items-center gap-2 hover:text-slate-100" href="https://linkedin.com/in/mgporter772" target="_blank">
+            <img src={linkedinLogo} alt="LinkedIn profile" className="size-6 brightness-90 group-hover:brightness-110"></img>
             <h2>https://linkedin.com/in/mgporter772</h2>
           </a>
         </div>

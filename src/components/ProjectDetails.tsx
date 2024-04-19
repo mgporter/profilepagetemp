@@ -1,4 +1,4 @@
-import { MutableRef, useEffect, useRef } from "preact/hooks";
+import { MutableRef, useEffect, useLayoutEffect, useRef } from "preact/hooks";
 import { Project } from "./PROJECTS";
 import { ProjectDetailsPage } from "./ProjectDetailsPage";
 
@@ -21,23 +21,26 @@ export default function ProjectDetails({details, containerRef, closeDetails}: Pr
   // Get coordinates of the large image (which is set to opacity=0), and calculate
   // the transforms in order to make the small image's size and position match.
   // The small image's transition property will handle the transition. 
-  useEffect(() => {
-    const { left: imgLeft, top: imgTop, width: imgWidth, height: imgHeight } = largeImgRef.current.getBoundingClientRect();
-    const placeholderCenterX = imgLeft + (imgWidth / 2) - mainLeft;
-    const placeholderCenterY = imgTop + (imgHeight / 2) - mainTop;
-    const movingImgLeft = placeholderCenterX - (movingImgStyle.width / 2);
-    const movingImgTop = placeholderCenterY - (movingImgStyle.height / 2);
-    const scaleFactorX = imgWidth / movingImgStyle.width;
+  useLayoutEffect(() => {
+    largeImgRef.current.onload = () => {
+      const { left: imgLeft, top: imgTop, width: imgWidth, height: imgHeight } = largeImgRef.current.getBoundingClientRect();
+      const placeholderCenterX = imgLeft + (imgWidth / 2) - mainLeft;
+      const placeholderCenterY = imgTop + (imgHeight / 2) - mainTop;
+      const movingImgLeft = placeholderCenterX - (movingImgStyle.width / 2);
+      const movingImgTop = placeholderCenterY - (movingImgStyle.height / 2);
+      const scaleFactorX = imgWidth / movingImgStyle.width;
+  
+      const translateX = (movingImgLeft - movingImgStyle.left) / scaleFactorX;
+      const translateY = (movingImgTop - movingImgStyle.top) / scaleFactorX;
+  
+      const newHeight = movingImgStyle.width * imgHeight / imgWidth;
+      const heightDifference = (newHeight - movingImgStyle.height) / (scaleFactorX * 2);
+  
+      movingImgRef.current.style.transform = `scale(${scaleFactorX}) translate(${translateX}px, ${translateY - heightDifference}px)`;
+      movingImgRef.current.style.height = newHeight + "px"; // Used to bring aspect ratio back to its original
+      movingImgRef.current.style.borderRadius = "0.375rem";
+    }
 
-    const translateX = (movingImgLeft - movingImgStyle.left) / scaleFactorX;
-    const translateY = (movingImgTop - movingImgStyle.top) / scaleFactorX;
-
-    const newHeight = movingImgStyle.width * imgHeight / imgWidth;
-    const heightDifference = (newHeight - movingImgStyle.height) / (scaleFactorX * 2);
-
-    movingImgRef.current.style.transform = `scale(${scaleFactorX}) translate(${translateX}px, ${translateY - heightDifference}px)`;
-    movingImgRef.current.style.height = newHeight + "px"; // Used to bring aspect ratio back to its original
-    movingImgRef.current.style.borderRadius = "0.375rem";
   }, [])
 
   const rect = details.thumbnailRect;
