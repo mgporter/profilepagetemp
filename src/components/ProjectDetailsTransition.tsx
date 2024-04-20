@@ -35,22 +35,22 @@ export default function ProjectDetailsTransition({thumbnailDiv, project, contain
     const mainRect = containerRef.current.getBoundingClientRect();
     const thumbnailDivRect = thumbnailDiv.getBoundingClientRect();
     const placeholderImg = detailsPageRef.current.querySelector("img.details_placeholder_image");
+
     if (placeholderImg instanceof HTMLImageElement) {
       setPlaceholderImgRect(placeholderImg.getBoundingClientRect());
     }
 
+    // Set height of main element to the content height
     const oldHeight = containerRef.current.style.height;
     containerRef.current.style.height = "";
     containerRef.current.style.height = containerRef.current.scrollHeight + "px";
 
-
     setContainerRect(mainRect);
     setThumbnailRect(thumbnailDivRect);
-
     setShowMovingImg(true);
 
     return () => {
-      containerRef.current.style.height = oldHeight;   // return the height back to it's original settings
+      containerRef.current.style.height = oldHeight;   // return main's height to its original settings
     }
   }, [])
 

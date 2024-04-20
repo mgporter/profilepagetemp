@@ -23,6 +23,10 @@ import { VNode } from "preact";
 
 // const inlinePictureBig = "border-2 border-slate-400 w-[90%] self-center";
 
+const STANDARD_1080P: Dimensions_2d = [1920, 1080];
+
+export type Dimensions_2d = [number, number];
+
 export type ProjectType = "Javascript" 
   | "TypeScript" 
   | "React"
@@ -47,6 +51,7 @@ export interface Project {
   featured: boolean;
   imageThumbnailSrc: string;
   imageSrc: string;
+  imageDimensions: Dimensions_2d;
   livePreviewUrl: string | null;
   sourceUrl: string;
   heading: string;
@@ -82,6 +87,7 @@ const projects: Project[] = [
     featured: true,
     imageThumbnailSrc: image_processor_image,
     imageSrc: image_processor_image,
+    imageDimensions: [1874, 1080],
     livePreviewUrl: "https://image-processor-xi.vercel.app/",
     sourceUrl: "https://github.com/mgporter/image_processor",
     heading: "An example of client-side image processing comparing the performance of WebAssembly (from C++) against Javascript.",
@@ -102,6 +108,7 @@ const projects: Project[] = [
     featured: true,
     imageThumbnailSrc: blubbles_world_image,
     imageSrc: blubbles_world_image,
+    imageDimensions: STANDARD_1080P,
     livePreviewUrl: "https://blubbleworld-01-client.vercel.app/",
     sourceUrl: "https://github.com/mgporter/blubbleworld-01-client",
     heading: "Build a town and grow your population in this 3d app. Just a demo currently, but you can generate landscapes and place buildings.",
@@ -121,6 +128,7 @@ const projects: Project[] = [
     featured: true,
     imageThumbnailSrc: battleship_online_image,
     imageSrc: battleship_online_image,
+    imageDimensions: STANDARD_1080P,
     livePreviewUrl: "https://mgporter.github.io/top10b_battleship_online_client/",
     sourceUrl: "https://github.com/mgporter/top10b_battleship_online_client",
     heading: "Create a game room and play against other players in this Battleship app backed by a Java Spring Boot backend.",
@@ -142,6 +150,7 @@ const projects: Project[] = [
     featured: false,
     imageThumbnailSrc: audiveris_image,
     imageSrc: audiveris_image,
+    imageDimensions: [567, 260],
     livePreviewUrl: null,
     sourceUrl: "https://github.com/Audiveris/audiveris",
     heading: "Written by Hervé Bitteur, Audiveris converts images of sheet music to MusicXML format.",
@@ -159,6 +168,7 @@ const projects: Project[] = [
     featured: false,
     imageThumbnailSrc: wordle_wrangler_image,
     imageSrc: wordle_wrangler_gif,
+    imageDimensions: [1376, 675],
     livePreviewUrl: null,
     sourceUrl: "https://github.com/mgporter/java03_wordle-wrangler",
     heading: "My mom likes to play Wordle, so I created a program to help me beat her at it ;)",
@@ -179,6 +189,7 @@ const projects: Project[] = [
     featured: false,
     imageThumbnailSrc: moana_memory_cards_image,
     imageSrc: moana_memory_cards_image,
+    imageDimensions: STANDARD_1080P,
     livePreviewUrl: "https://top11-memory-cards.vercel.app/",
     sourceUrl: "https://github.com/mgporter/top11_memory-cards",
     heading: "Click on each character once and only once, but beware: the cards shuffle themselves after each click!",
@@ -200,6 +211,7 @@ const projects: Project[] = [
     featured: false,
     imageThumbnailSrc: knights_travails_image,
     imageSrc: knights_travails_gif,
+    imageDimensions: [1107, 651],
     livePreviewUrl: null,
     sourceUrl: "https://github.com/mgporter/java01_knights-travails",
     heading: "An algorithm to find the shortest path for a chess knight to move between any two squares.",
@@ -219,6 +231,7 @@ const projects: Project[] = [
     featured: false,
     imageThumbnailSrc: battleship_singleplayer_image,
     imageSrc: battleship_singleplayer_image,
+    imageDimensions: STANDARD_1080P,
     livePreviewUrl: "https://mgporter.github.io/top10_battleship/",
     sourceUrl: "https://github.com/mgporter/top10_battleship",
     heading: "The classic game of Battleship, reborn in a 3d javascript environment!",
@@ -243,6 +256,7 @@ const projects: Project[] = [
     featured: false,
     imageThumbnailSrc: linked_list_image,
     imageSrc: linked_list_image,
+    imageDimensions: STANDARD_1080P,
     livePreviewUrl: "https://mgporter.github.io/top09_linkedlist/",
     sourceUrl: "https://github.com/mgporter/top09_linkedlist",
     heading: "A visualization of a linked list with connected, draggable nodes, built on an actual linked list in Javascript.",
@@ -263,6 +277,7 @@ const projects: Project[] = [
     featured: false,
     imageThumbnailSrc: weather_app_image,
     imageSrc: weather_app_image,
+    imageDimensions: STANDARD_1080P,
     livePreviewUrl: "https://mgporter.github.io/top08_weather-app/",
     sourceUrl: "https://github.com/mgporter/top08_weather-app",
     heading: "Frontend for a weather API that features a 3-day day-by-day report as well as hour-by-hour forecasts.",
@@ -283,6 +298,7 @@ const projects: Project[] = [
     featured: false,
     imageThumbnailSrc: todo_list_image,
     imageSrc: todo_list_image,
+    imageDimensions: STANDARD_1080P,
     livePreviewUrl: "https://mgporter.github.io/top07_todo-list/",
     sourceUrl: "https://github.com/mgporter/top07_todo-list",
     heading: "A todo list app that allows uesrs to organize and drag-and-drop items, with automatic saving to LocalStorage.",
@@ -305,6 +321,7 @@ const projects: Project[] = [
     featured: false,
     imageThumbnailSrc: restaurant_page_image,
     imageSrc: restaurant_page_image,
+    imageDimensions: STANDARD_1080P,
     livePreviewUrl: "https://mgporter.github.io/top06_restaurant-page/",
     sourceUrl: "https://github.com/mgporter/top06_restaurant-page",
     heading: "A tabbed navigation site with a spiffy background that uses webpack to bundle all dependencies and assets.",
@@ -324,6 +341,7 @@ const projects: Project[] = [
     featured: false,
     imageThumbnailSrc: tic_tac_toe_image,
     imageSrc: tic_tac_toe_image,
+    imageDimensions: STANDARD_1080P,
     livePreviewUrl: "https://mgporter.github.io/top05_tic-tac-toe/",
     sourceUrl: "https://github.com/mgporter/top05_tic-tac-toe",
     heading: "A tic-tac-toe game that allows for custom grid sizes, number of players, player decals, and even win conditions.",
@@ -344,6 +362,7 @@ const projects: Project[] = [
     featured: false,
     imageThumbnailSrc: book_library_image,
     imageSrc: book_library_image,
+    imageDimensions: STANDARD_1080P,
     livePreviewUrl: "https://mgporter.github.io/top04_library/",
     sourceUrl: "https://github.com/mgporter/top04_library",
     heading: "A skeuomorphic virtual bookshelf that displays virtual book entries and information like books on a shelf.",
@@ -363,6 +382,7 @@ const projects: Project[] = [
     featured: false,
     imageThumbnailSrc: calculator_image,
     imageSrc: calculator_image,
+    imageDimensions: STANDARD_1080P,
     livePreviewUrl: "https://mgporter.github.io/top03_calculator/",
     sourceUrl: "https://github.com/mgporter/top03_calculator",
     heading: "A simple Javascript calculator that actually does decimal numbers correctly. Also does repeated operations.",
@@ -382,6 +402,7 @@ const projects: Project[] = [
     featured: false,
     imageThumbnailSrc: etch_a_sketch_image,
     imageSrc: etch_a_sketch_image,
+    imageDimensions: STANDARD_1080P,
     livePreviewUrl: "https://mgporter.github.io/top02_etch-a-sketch/",
     sourceUrl: "https://github.com/mgporter/top02_etch-a-sketch",
     heading: "Select a color and paint with it by moving the mouse over a grid of custom size. Supports blending of colors.",
@@ -400,6 +421,7 @@ const projects: Project[] = [
     featured: false,
     imageThumbnailSrc: rps_game_image,
     imageSrc: rps_game_image,
+    imageDimensions: STANDARD_1080P,
     livePreviewUrl: "https://mgporter.github.io/top01_rock-paper-scissors/",
     sourceUrl: "https://github.com/mgporter/top01_rock-paper-scissors",
     heading: "Play an animated game of Rock-paper-scissors against a computer opponent.",

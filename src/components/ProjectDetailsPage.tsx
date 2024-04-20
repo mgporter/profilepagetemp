@@ -1,4 +1,4 @@
-import { ForwardedRef, forwardRef, useEffect, useRef } from "preact/compat"
+import { ForwardedRef, forwardRef, useEffect, useMemo } from "preact/compat"
 import { Project } from "./PROJECTS";
 
 interface ProjectDetailsPageProps {
@@ -11,25 +11,25 @@ const projectLink = "transition-colors text-xl rounded-sm bg-white/10 hover:bg-b
 
 export const ProjectDetailsPage = forwardRef((props: ProjectDetailsPageProps, ref: ForwardedRef<HTMLDivElement>) => {
 
-  const pageRef = useRef<HTMLDivElement>(null!);
-
-  useEffect(() => {
-    // console.log("main height changing")
-    // const main = document.querySelector("main");
-    // if (main) {
-    //   const oldHeight = main.style.height;
-    //   main.style.height = `${pageRef.current.scrollHeight}px`;
-    //   return () => {
-    //     main.style.height = oldHeight;
-    //   }
-    // }
-  }, []);
-
   useEffect(() => {
     props.onComponentLoad();
   }, []);
 
   const project = props.project;
+
+  const placeholderCanvas = useMemo(() => {
+    const canvas = document.createElement('canvas');
+    canvas.width = project.imageDimensions[0];
+    canvas.height = project.imageDimensions[1];
+  
+    const ctx = canvas.getContext('2d');
+    if (ctx) {
+      ctx.fillStyle = 'rgba(0,0,0,0)';
+      ctx.fillRect(0, 0, project.imageDimensions[0], project.imageDimensions[1]);
+    }
+
+    return canvas;
+  }, [])
 
   return (
     <div className="project_details_content project_delayed_fadein absolute z-[110] inset-0
@@ -55,8 +55,7 @@ export const ProjectDetailsPage = forwardRef((props: ProjectDetailsPageProps, re
         <a href={project.sourceUrl} target="_blank"><li className={projectLink}>View the source on Github</li></a>
       </ul>
 
-      {/* This marks the final location of the movingImg. It is not shown directly. */}
-      <img src={project.imageSrc} alt={project.name} className="details_placeholder_image opacity-0"></img>
+      <img src={placeholderCanvas.toDataURL()} className="details_placeholder_image"></img>
 
       <ul className="flex items-center bg-white/10 mx-8 sm:mx-2 flex-wrap mb-4 p-2 gap-4">
         <li className="px-2">Tech stack:</li>
