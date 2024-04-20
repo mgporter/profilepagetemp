@@ -56,7 +56,7 @@ export const ProjectDetailsPage = forwardRef((props: ProjectDetailsPageProps, re
       </ul>
 
       {/* This marks the final location of the movingImg. It is not shown directly. */}
-      <img src={project.imageSrc} alt={project.name} className="opacity-0"></img>
+      <img src={project.imageSrc} alt={project.name} className="details_placeholder_image opacity-0"></img>
 
       <ul className="flex items-center bg-white/10 mx-8 sm:mx-2 flex-wrap mb-4 p-2 gap-4">
         <li className="px-2">Tech stack:</li>

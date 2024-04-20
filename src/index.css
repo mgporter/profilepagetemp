@@ -68,7 +68,7 @@ main {
 }
 
 .bubblegrow {
-  animation: 3s linear 0s 1 forwards normal running bubblegrow;
+  animation: 0.5s linear 0s 1 forwards normal running bubblegrow;
 }
 
 .project_delayed_fadein {
