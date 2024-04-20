@@ -9,6 +9,7 @@ export default function Main() {
 
   const [projectArray, setProjectArray] = useState(projects);
   const mainViewRef = useRef<HTMLDivElement>(null!);
+  const thumbnailRef = useRef<HTMLDivElement>(null!);
   const [showProject, setShowProject] = useState<DetailsProp | null>(null);
 
   useEffect(() => {
@@ -66,11 +67,9 @@ export default function Main() {
 
         target.style.zIndex = "200";
 
-        const thumbnailRect = target.getBoundingClientRect();
-
         setShowProject({
           project: projects[Number(target.dataset.id)],
-          thumbnailRect: thumbnailRect,
+          thumbnailDiv: target,
         });
 
         setTimeout(() => {
@@ -88,9 +87,10 @@ export default function Main() {
   }
 
 
+
   return (
     <main 
-      className="relative py-48 sm:pt-12 sm:pb-48 overflow-hidden"
+      className="relative py-48 sm:pt-12 sm:pb-48 overflow-clip"
       ref={mainViewRef}>
 
       <div

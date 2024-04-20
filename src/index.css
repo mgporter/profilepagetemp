@@ -8,6 +8,12 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  --bg-gradient: radial-gradient(circle at 0% 0%, rgba(22,35,91,1) 20%, rgba(11,74,93,1) 60%, rgba(11,74,93,1) 84%, rgb(7, 50, 63) 100%);
+  --bubble-pos-x: 0%;
+  --bubble-pos-y: 0%;
+}
+
+:root.dark {
   --background-color: #020714;
 }
 
@@ -19,18 +25,17 @@ body {
   min-width: 320px;
   min-height: 100vh;
   background-color: var(--background-color);
-  /* background-image: url("./images/branchesBW2.jpg");
-  background-size: 110%;
-  background-attachment: fixed;
-  background-position: -300px 0px;
-  background-repeat: no-repeat;
-  background-blend-mode: normal; */
-
+  background: var(--bg-gradient);
+  /* background-attachment: fixed; */
 }
 
 .project_details_bubble {
-  background-color: var(--background-color);
+  /* background-color: var(--background-color); */
+  background: var(--bg-gradient);
 }
+
+
+
 
 div#container {
   margin: 0 1rem;
@@ -40,6 +45,8 @@ div#container {
   grid-template-columns: 22rem auto;
   min-height: 100vh;
   color:white;
+  /* background-color: #0a234477; */
+  /* background-image: radial-gradient(circle at bottom, rgba(23, 19, 95, 0.2) 20%, rgba(41, 14, 83, 0.2) 60%); */
 }
 
 @media screen and (max-width: 720px) {
@@ -61,7 +68,7 @@ main {
 }
 
 .bubblegrow {
-  animation: 0.3s linear 0s 1 backwards reverse running bubblegrow;
+  animation: 3s linear 0s 1 forwards normal running bubblegrow;
 }
 
 .project_delayed_fadein {
@@ -73,12 +80,14 @@ main {
   animation: 0.3s ease-in-out 0s 1 both normal running movingImgKeyframes;
 }
 
+/* clip-path: circle(8% at var(--bubble-pos-x) var(--bubble-pos-y)); */
+
 @keyframes bubblegrow {
   0% {
-    transform: scale(1);
+    clip-path: circle(1% at var(--bubble-pos-x) var(--bubble-pos-y));
   }
   100% {
-    transform: scale(0.001);
+    clip-path: circle(100% at var(--bubble-pos-x) var(--bubble-pos-y));
   }
 }
 

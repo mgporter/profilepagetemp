@@ -1,4 +1,4 @@
-import { useState } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 import githubLogo from "../images/github-logo.png";
 import linkedinLogo from "../images/Linkedin_logo.png";
 import { dispatcher } from "./Dispatcher";
@@ -20,6 +20,13 @@ export default function Nav() {
 
   const [active, setActive] = useState("all");
 
+  useEffect(() => {
+    // const root = document.documentElement;
+
+    // root.classList.add("dark");
+
+  }, [])
+
   function selectProject(types: ProjectType[]) {
     if (types.length > 0) setActive(types[0]);
     else setActive("all");
@@ -38,11 +45,11 @@ export default function Nav() {
 
         <div className="relative z-10 size-48 self-center mt-8 mb-[-48px]">
           <img src={profileColorPic} className="relative rounded-[100%] z-20"></img>
-          <div className="absolute z-10 top-8 left-8 size-56 skew-x-12 rounded-[100%] blur-lg bg-gray-800"></div>
+          <div className="absolute z-10 top-8 left-8 size-56 scale-y-[0.2] scale-x-[1.1] translate-y-[2rem] rounded-[100%] bg-purple-900/30"></div>
         </div>
         
 
-        <h1 className="relative z-20 text-7xl mb-8 text-slate-400 self-center">mgporter</h1>
+        <h1 className="relative z-20 text-7xl mb-8 text-slate-300 self-center">mgporter</h1>
 
         <div className="relative z-20 flex flex-col gap-1 mb-12 text-slate-300 text-lg ">
           <a className="flex group items-center gap-2 hover:text-slate-100" href="https://github.com/mgporter" target="_blank">
