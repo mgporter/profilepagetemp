@@ -249,6 +249,27 @@ const projects: Project[] = [
       </>,
   },
   {
+    name: "Profile Page Website",
+    id: 160,
+    style: "default",
+    types: ["TypeScript", "Preact"],
+    featured: false,
+    imageThumbnailSrc: image_processor_image,
+    imageSrc: image_processor_image,
+    imageDimensions: [1874, 1080],
+    livePreviewUrl: "https://image-processor-xi.vercel.app/",
+    sourceUrl: "https://github.com/mgporter/image_processor",
+    heading: "The website you are viewing now. A lightweight portfolio showcase made with Preact and Typescript.",
+    description: 
+      <>
+        <p>Allows users to upload a picture, process it, and save the results back to disk.</p>
+        <p>Utilizes C++ code compiled to WebAssembly with emscripten to accelerate image processing (it only does a gaussian blur right now though).</p>
+        <p>Data is transferred using Javascript's ArrayBuffers (or pointers to ArrayBuffers). The program manages the WebAssembly memory manually (that is, without using emscripten's 'glue code') in order to keep the wasm code size small (~1,299 bytes).</p>
+        <p>Performance of calculation time and overhead time is measured on each run. Even with its extra overhead, the WebAssembly module easily beats the Javascript implementation by a factor of 10.</p>
+        <p>Javascript's Web Workers API is used in order to keep the thread responsive during calculations.</p>
+      </>,
+  },
+  {
     name: "Visual Linked List",
     id: 90,
     style: "default",

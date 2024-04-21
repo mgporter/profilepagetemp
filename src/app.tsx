@@ -5,7 +5,7 @@ import Main from './components/Main';
 export function App() {
 
   return (
-    <div id="container" className="text-lg text-gray-300">
+    <div id="container" className="text-lg text-slate-200">
 
       <Nav />
       <Main />

@@ -1,7 +1,6 @@
-import { MutableRef, useEffect, useLayoutEffect, useRef, useState } from "preact/hooks";
+import { MutableRef, useRef, useState } from "preact/hooks";
 import { Project } from "./PROJECTS";
 import { ProjectDetailsPage } from "./ProjectDetailsPage";
-import { CSSProperties } from "preact/compat";
 import ProjectDetailsTransition from "./ProjectDetailsTransition";
 
 export interface DetailsProp {

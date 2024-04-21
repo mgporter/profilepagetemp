@@ -9,7 +9,6 @@ export default function Main() {
 
   const [projectArray, setProjectArray] = useState(projects);
   const mainViewRef = useRef<HTMLDivElement>(null!);
-  const thumbnailRef = useRef<HTMLDivElement>(null!);
   const [showProject, setShowProject] = useState<DetailsProp | null>(null);
 
   useEffect(() => {

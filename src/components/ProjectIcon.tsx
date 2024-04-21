@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "preact/hooks";
+import { useRef, useState } from "preact/hooks";
 import { Project } from "./PROJECTS"
 
 interface ProjectIconProps {

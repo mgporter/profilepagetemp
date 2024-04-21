@@ -34,24 +34,78 @@ body {
   /* background: radial-gradient(circle at 0% 0%, rgba(22,35,91,1) 20%, rgba(11,74,93,1) 60%, rgba(11,74,93,1) 84%, rgb(7, 50, 63) 100%); */
 }
 
-
-
-
 div#container {
   margin: 0 1rem;
   max-width: 1200px;
+  position: relative;
+  border-left: 2px solid rgba(0, 0, 0, 0.3);
+  border-right: 2px solid rgba(0, 0, 0, 0.3);
   display: grid;
   grid-template-areas: "nv mn";
   grid-template-columns: 22rem auto;
   min-height: 100vh;
-  color:white;
   background-color: rgba(10, 35, 68, 0.6);
   /* background-image: radial-gradient(circle at bottom, rgba(23, 19, 95, 0.2) 20%, rgba(41, 14, 83, 0.2) 60%); */
 }
 
-@media screen and (max-width: 720px) {
+/* div#container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(10, 35, 68, 0.6);
+  mask-image: url("./images/test-path.svg");
+  mask-position: right;
+  mask-repeat: repeat-y;
+  mask-size: cover;
+} */
+
+/* nav {
+  background-color: rgba(10, 35, 68, 0.6);
+}
+
+main::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(10, 35, 68, 0.6);
+  mask-image: url("./images/test-path.svg");
+  mask-position: right;
+  mask-repeat: repeat-y;
+  mask-size: cover;
+} */
+
+@media screen and (max-height: 800px) {
+  nav .navcontainer {
+    position: static;
+  }
+
+  nav .title {
+    scale: 0.8;
+  } 
+}
+
+@media screen and (max-width: 1200px) {
   div#container {
     margin: 0;
+    border: none;
+    grid-template-columns: 40% 60%;
+  }
+}
+
+@media screen and (max-width: 893px) {
+  div#container {
+    grid-template-columns: 50% 50%;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  div#container {
     display: grid;
     grid-template-areas: "nv" "mn";
     grid-template-columns: auto;
