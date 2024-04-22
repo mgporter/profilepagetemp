@@ -10,11 +10,14 @@ interface ProjectDetailsControlsProps {
   closeDetails: () => void;
 }
 
-const controlStyle = 
-  "group flex items-center gap-2 cursor-pointer px-3 rounded-xl font-bold text-2xl \
-  transition-colors text-indigo-50/90 hover:text-yellow-200 \
-  active:bg-sky-300/30 \
-  border-2 border-transparent hover:border-yellow-200/40"
+const controlLabelStyle = 
+  "flex items-center gap-2 px-2 font-bold text-2xl \
+  transition-colors text-indigo-50/90 group-hover:text-yellow-300";
+
+const controlDivStyle = "group flex justify-center items-center gap-2 \
+  mini:row-start-2 p-2 cursor-pointer rounded-xl \
+  border-2 border-transparent \
+  hover:border-yellow-200/60 active:bg-sky-300/30 "
 
 export default function ProjectDetailsControls({
   index,
@@ -72,14 +75,14 @@ export default function ProjectDetailsControls({
   }
 
   return (
-    <div className={`grid grid-cols-3 gap-8 mb-8 px-8 h-10 select-none
-      md:gap-0 md:px-0 mini:grid-cols-2 mini:mb-20 mini:gap-y-4
+    <div className={`grid grid-cols-3 gap-8 mb-16 px-8 select-none
+      md:gap-0 md:px-0 mini:grid-cols-2 mini:mb-12 mini:gap-y-4 mini:auto-rows-min
       ${enabled ? " " : " pointer-events-none"}`}>
       
 
-      <div className="flex items-center gap-2 justify-self-start mini:row-start-2">
-        <div className={controlStyle}
-          onClick={() => swipe("goback")}>
+      <div className={controlDivStyle + " flex-wrap justify-self-start"}
+        onClick={() => swipe("goback")}>
+        <div className={controlLabelStyle}>
           <span>❮❮</span>
           <span>Back</span>
         </div>
@@ -102,12 +105,12 @@ export default function ProjectDetailsControls({
       </div>
 
 
-      <div className="flex items-center gap-2 justify-self-end mini:row-start-2">
+      <div className={controlDivStyle + " flex-wrap-reverse justify-self-end"}>
         <img 
           src={projectArray[index.next].imageThumbnailSrc} 
           className="h-10 brightness-90 aspect-video object-cover rounded-sm border border-indigo-50/30">
         </img>
-        <div className={controlStyle}
+        <div className={controlLabelStyle}
           onClick={() => swipe("goforward")}>
           <span>Next</span>
           <span>❯❯</span>

@@ -19,10 +19,6 @@ for (const path in thumbnailImages) {
   images[name] = thumbnailImages[path].default;
 }
 
-
-
-// const inlinePictureBig = "border-2 border-slate-400 w-[90%] self-center";
-
 export type Dimensions_2d = [number, number];
 
 const STANDARD_1080P: Dimensions_2d = [1920, 1080];
@@ -59,26 +55,6 @@ export interface Project {
 }
 
 const projects: Project[] = [
-  // {
-  //   name: "About me",
-  //   id: Number.MAX_SAFE_INTEGER,
-  //   style: "default",
-  //   types: [],
-  //   featured: false,
-  //   imageThumbnailSrc: mgporter_image,
-  //   imageSrc: mgporter_image,
-  //   livePreviewUrl: "https://mgporter.github.io/",
-  //   sourceUrl: "https://github.com/mgporter/",
-  //   heading: "About me",
-  //   description: 
-  //     <>
-  //       <p>Allows users to upload a picture, process it, and save the results back to disk.</p>
-  //       <p>Utilizes C++ code compiled to WebAssembly with emscripten to accelerate image processing (it only does a gaussian blur right now though).</p>
-  //       <p>Data is transferred using Javascript's ArrayBuffers (or pointers to ArrayBuffers). The program manages the WebAssembly memory manually (that is, without using emscripten's 'glue code') in order to keep the wasm code size small (~1,299 bytes).</p>
-  //       <p>Performance of calculation time and overhead time is measured on each run. Even with its extra overhead, the WebAssembly module easily beats the Javascript implementation by a factor of 10.</p>
-  //       <p>Javascript's Web Workers API is used in order to keep the thread responsive during calculations.</p>
-  //     </>,
-  // },
   {
     name: "Wasm Image Processor",
     id: 160,
@@ -257,13 +233,13 @@ const projects: Project[] = [
     imageThumbnailSrc: images["profile_website_thumbnail"],
     imageSrc: images["profile_website"],
     imageDimensions: [1873, 1054],
-    livePreviewUrl: "https://image-processor-xi.vercel.app/",
-    sourceUrl: "https://github.com/mgporter/image_processor",
+    livePreviewUrl: "https://mgporter.github.io/",
+    sourceUrl: "https://github.com/mgporter/mgporter.github.io",
     heading: "The website you are viewing now. A lightweight portfolio showcase made with Preact, Typescript, and GRADIENTS ;) .",
     description: 
       <>
-        <p>This is a simple website for displaying some of my programming work. It is meant to be lightweight and responsive. Asides from using Preact to cut down on overhead code, it also contains simple optimizations to improve the user experience on slower connections. For example, images (and there are a lot of them) are given a placeholder while they are loading.</p>
-        <p>I couldn't help but include one snazzy effect when the user opens a project. The page 'bubbles' out and is replaced by the project description. This effect actually has quite a few moving parts, since it is not usually possible to clip (or delete) a portion of an element starting from the inside. See if you can figure out how it's done! As far as hooks, this effect does involve the relatively little-used useLayoutEffect hook to get accurate measurements of dom elements (complicated greatly by the presence/absence of the scrollbar!).</p>
+        <p>This is a simple website for displaying some of my programming work. It is lightweight, and responsive up to 500% zoom. Asides from using Preact to cut down on overhead code, it also contains simple optimizations to improve the user experience on slower connections. For example, thumbnail and placeholder images are used to improve 'first meaningful paint', and some images are preloaded to keep animations smooth.</p>
+        <p>I couldn't help but include one snazzy effect when the user opens a project. The page 'bubbles' out and is replaced by the project description. This effect actually has quite a few moving parts, since it is not usually possible to clip (or delete) a portion of an element starting from the inside. See if you can figure out how it's done! As far as hooks, this effect requires the rarely-seen useLayoutEffect hook to get accurate measurements of dom elements (complicated greatly by the presence/absence of the scrollbar!).</p>
       </>,
   },
   {

@@ -2,6 +2,7 @@ import { MutableRef, useRef, useState } from "preact/hooks";
 import { Project } from "./PROJECTS";
 import { ProjectDetailsPage } from "./ProjectDetailsPage";
 import ProjectDetailsTransition from "./ProjectDetailsTransition";
+import { dispatcher } from "./Dispatcher";
 
 export interface DetailsProp {
   projectIndex: number;
@@ -25,6 +26,17 @@ export default function ProjectDetails({
 
   const [ready, setReady] = useState(false);
 
+  function onEffectComplete() {
+
+    const placeholderImg = detailsPageRef.current.querySelector(".details_placeholder_image");
+    if (placeholderImg instanceof HTMLElement) {
+      placeholderImg.style.visibility = "visible";
+    }
+
+    dispatcher.dispatch("enableProjectControls", true);
+    dispatcher.dispatch("showProjectIcons", false);
+  }
+
   function pageContentReady() {
     setReady(true);
   }
@@ -35,7 +47,8 @@ export default function ProjectDetails({
         <ProjectDetailsTransition 
           thumbnailDiv={details.thumbnailDiv}
           containerRef={containerRef}
-          detailsPageRef={detailsPageRef}> 
+          detailsPageRef={detailsPageRef}
+          onEffectComplete={onEffectComplete}> 
           <img 
             src={projectArray[details.projectIndex].imageSrc} 
             alt={projectArray[details.projectIndex].name} 

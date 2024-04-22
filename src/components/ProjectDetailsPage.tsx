@@ -1,6 +1,7 @@
 import { ForwardedRef, forwardRef, useRef, useState } from "preact/compat"
 import { Project } from "./PROJECTS";
 import ProjectDetailsControls from "./ProjectDetailsControls";
+import { VNode } from "preact";
 
 interface ProjectDetailsPageProps {
   projectIndex: number;
@@ -9,19 +10,9 @@ interface ProjectDetailsPageProps {
   onComponentLoad: () => void;
 }
 
-  // const placeholderCanvas = useMemo(() => {
-  //   const canvas = document.createElement('canvas');
-  //   canvas.width = project.imageDimensions[0];
-  //   canvas.height = project.imageDimensions[1];
-  
-  //   const ctx = canvas.getContext('2d');
-  //   if (ctx) {
-  //     ctx.fillStyle = 'rgba(0,0,0,0)';
-  //     ctx.fillRect(0, 0, project.imageDimensions[0], project.imageDimensions[1]);
-  //   }
-
-  //   return canvas;
-  // }, [])
+function preloadImage(url: string): VNode<HTMLImageElement> {
+  return <img src={url} className="preloaded_img absolute size-0 top-0 left-0 hidden"></img>
+}
 
 const projectLink = "transition-colors text-xl rounded-sm bg-blue-400/80 hover:bg-blue-700 ml-4 mb-1 px-4 py-1";
 
@@ -29,6 +20,8 @@ export const ProjectDetailsPage = forwardRef((props: ProjectDetailsPageProps, re
 
   const [index, setIndex] = useState(props.projectIndex);
   const pageContentRef = useRef<HTMLDivElement>(null!);
+  const [preloadedImgs, setPreloadedImgs] = 
+    useState<[VNode<HTMLImageElement>, VNode<HTMLImageElement>] | null>(null);
 
   const limit = props.projectArray.length;
   const project = props.projectArray[index];
@@ -36,10 +29,24 @@ export const ProjectDetailsPage = forwardRef((props: ProjectDetailsPageProps, re
   const prevIndex = (index + limit - 1) % limit;
   const nextIndex = (index + 1) % limit;
 
+  function onPageLoad() {
+    props.onComponentLoad();
+    const img1 = preloadImage(props.projectArray[nextIndex].imageSrc);
+    const img2 = preloadImage(props.projectArray[prevIndex].imageSrc);
+    setPreloadedImgs([img1, img2]);
+  }
+
+  // const preloadedImgs = useMemo(() => {
+  //   console.log(prevIndex, nextIndex)
+  //   const img1 = preloadImage(props.projectArray[nextIndex].imageSrc);
+  //   const img2 = preloadImage(props.projectArray[prevIndex].imageSrc);
+  //   return [img1, img2];
+  // }, [prevIndex, nextIndex, props.projectArray])
+
 
   return (
     <div className="project_details_content project_delayed_fadein absolute z-[110] inset-0
-       pt-4 px-2 items-stretch"
+       pt-8 px-2 items-stretch"
        ref={ref}>
       
       <ProjectDetailsControls
@@ -66,10 +73,9 @@ export const ProjectDetailsPage = forwardRef((props: ProjectDetailsPageProps, re
 
         <img 
           src={project.imageSrc} 
-          className="details_placeholder_image w-3/4 rounded-md self-center opacity-0" 
-          onLoad={props.onComponentLoad}
+          className="details_placeholder_image w-3/4 rounded-md self-center invisible" 
+          onLoad={onPageLoad}
           style={{aspectRatio: project.imageDimensions[0] / project.imageDimensions[1]}}></img>
-        {/* <img src={placeholderCanvas.toDataURL()} className="details_placeholder_image w-3/4 self-center"></img> */}
 
         <ul className="flex items-center bg-indigo-950 border-t border-indigo-600 mx-8 sm:mx-2 flex-wrap mb-4 p-2 gap-4">
           <li className="px-2 font-bold">Tech stack:</li>
@@ -84,8 +90,12 @@ export const ProjectDetailsPage = forwardRef((props: ProjectDetailsPageProps, re
 
       </div>
       
-
-
+      {/* Add preloaded images */}
+      {preloadedImgs && 
+        <>
+          {preloadedImgs[0]}
+          {preloadedImgs[1]}
+        </>}
 
     </div>
   )

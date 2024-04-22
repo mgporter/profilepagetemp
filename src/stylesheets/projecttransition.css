@@ -1,5 +1,16 @@
 /* Project Transition effects */
 
+:root {
+  --bubble-pos-x: 0%;
+  --bubble-pos-y: 0%;
+  --moving_img_orig_height: 0;
+  --moving_img_scale: 1;
+  --moving_img_translateX: 0;
+  --moving_img_translateY: 0;
+  --moving_img_height: auto;
+  --moving_img_borderradius: auto;
+}
+
 .bubblegrow {
   animation: 0.5s linear 0s 1 forwards normal running bubblegrow;
 }
@@ -9,8 +20,7 @@
 }
 
 .movingImg {
-  transition: all 0.8s 0.2s cubic-bezier(0.45, 0, 0.3, 1);
-  animation: 0.3s ease-in-out 0s 1 both normal running movingImgKeyframes;
+  animation: 1s cubic-bezier(0.45, 0, 0.3, 1) 0s 1 forwards normal running movingImgKeyframes;
 }
 
 @keyframes bubblegrow {
@@ -35,7 +45,17 @@
   0% {
     opacity: 0;
   }
-  100% {
+  10% {
     opacity: 1;
+    transform: none;
+    height: var(--moving_img_orig_height);
+  }
+  90% {
+    border-radius: 0;
+  }
+  100% {
+    height: var(--moving_img_height);
+    border-radius: var(--moving_img_borderradius);
+    transform: scale(var(--moving_img_scale)) translate(var(--moving_img_translateX), var(--moving_img_translateY));
   }
 }

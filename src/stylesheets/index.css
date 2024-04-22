@@ -9,8 +9,6 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   --bg-gradient: radial-gradient(circle at 0% 0%, rgba(22,35,91,1) 20%, rgba(11,74,93,1) 60%, rgba(11,74,93,1) 84%, rgb(7, 50, 63) 100%);
-  --bubble-pos-x: 0%;
-  --bubble-pos-y: 0%;
 }
 
 /* :root.dark {
@@ -86,15 +84,16 @@ main::before {
   }
 }
 
+/* This causes the grid to fill the whole page */
 @media screen and (max-width: 1200px) {
   div#container {
     margin: 0;
     border: none;
-    grid-template-columns: 40% 60%;
   }
 }
 
-/* This is when the display moves to a single column of ProjectIcons */
+/* This is when the display moves to a single column of ProjectIcons.
+Instead of allowing this, we can just put the nav on top of the main element. */
 @media screen and (max-width: 896px) {
   div#container {
     grid-template-areas: "nv" "mn";
@@ -102,14 +101,6 @@ main::before {
     grid-template-rows: 1fr, 1fr;
   }
 }
-
-/* @media screen and (max-width: 720px) {
-  div#container {
-    grid-template-areas: "nv" "mn";
-    grid-template-columns: auto;
-    grid-template-rows: 1fr, 1fr;
-  }
-} */
 
 nav {
   grid-area: nv;

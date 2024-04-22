@@ -7,6 +7,7 @@ interface ProjectDetailsTransitionProps {
   children: ComponentChildren;
   containerRef: MutableRef<HTMLDivElement>;
   detailsPageRef: MutableRef<HTMLDivElement>;
+  onEffectComplete: () => void;
 }
 
 const EMPTY_DOM_RECT: DOMRect = {
@@ -25,27 +26,24 @@ export default function ProjectDetailsTransition({
   thumbnailDiv, 
   children, 
   containerRef, 
-  detailsPageRef}: ProjectDetailsTransitionProps) {
+  detailsPageRef,
+  onEffectComplete}: ProjectDetailsTransitionProps) {
 
   const bubbleRef = useRef<HTMLDivElement>(null!);
   const [containerRect, setContainerRect] = useState(EMPTY_DOM_RECT);
   const [thumbnailRect, setThumbnailRect] = useState(EMPTY_DOM_RECT);
   const [placeholderImgRect, setPlaceholderImgRect] = useState(EMPTY_DOM_RECT);
-  const [showMovingImg, setShowMovingImg] = useState<HTMLImageElement>(null!);
-
-  // This variable is given a value in useEffectLayout before
-  // it is used by ProjectDetailsMovingImg
-  // let placeholderImg = null;
+  const [showMovingImg, setShowMovingImg] = useState(false);
   
   useLayoutEffect(() => {
 
     const mainRect = containerRef.current.getBoundingClientRect();
     const thumbnailDivRect = thumbnailDiv.getBoundingClientRect();
-    const placeholderImg = detailsPageRef.current.querySelector("img.details_placeholder_image");
+    const placeholderImgTemp = detailsPageRef.current.querySelector("img.details_placeholder_image");
 
-    if (placeholderImg instanceof HTMLImageElement) {
-      setPlaceholderImgRect(placeholderImg.getBoundingClientRect());
-      setShowMovingImg(placeholderImg);
+    if (placeholderImgTemp instanceof HTMLImageElement) {
+      setPlaceholderImgRect(placeholderImgTemp.getBoundingClientRect());
+      setShowMovingImg(true);
     }
 
     // Set height of main element to the content height
@@ -87,8 +85,11 @@ export default function ProjectDetailsTransition({
   const centerYPercent = 
     ((thumbnailRect.top + (thumbnailRect.height / 2) + window.scrollY) / document.body.scrollHeight) * 100;
   
-  document.documentElement.style.cssText = 
-    `--bubble-pos-x: ${centerXPercent}%; --bubble-pos-y: ${centerYPercent}%;`;
+  const root = document.querySelector(':root');
+  if (root instanceof HTMLElement) {
+    root.style.setProperty("--bubble-pos-x", centerXPercent + "%");
+    root.style.setProperty("--bubble-pos-y", centerYPercent + "%");
+  }
 
   const bubbleStyle = {
     left: -containerRect.left - window.scrollX,
@@ -109,9 +110,9 @@ export default function ProjectDetailsTransition({
       {showMovingImg &&
         <ProjectDetailsMovingImg 
           placeholderImgRect={placeholderImgRect}
-          placeholderImg={showMovingImg} 
           thumbnailRect={thumbnailRect} 
-          containerRect={containerRect}>
+          containerRect={containerRect}
+          onEffectComplete={onEffectComplete}>
           {children}
         </ProjectDetailsMovingImg>}
 

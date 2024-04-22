@@ -9,6 +9,7 @@ export default function Main() {
 
   const [projectArray, setProjectArray] = useState(projects);
   const mainViewRef = useRef<HTMLDivElement>(null!);
+  const iconHolderRef = useRef<HTMLDivElement>(null!);
   const [showProject, setShowProject] = useState<DetailsProp | null>(null);
 
   useEffect(() => {
@@ -43,7 +44,7 @@ export default function Main() {
       });
     
     return unsubscribe;
-  }, []);
+  }, [])
 
   useEffect(() => {
     const unsubscribe = dispatcher.subscribe("selectFeatured", () => {
@@ -53,6 +54,13 @@ export default function Main() {
       const projectsCopy = [...projects];
       projectsCopy.forEach(x => x.featured ? x.style = "emphasized" : x.style = "faded");
       setProjectArray(projectsCopy);
+    })
+    return unsubscribe;
+  }, [])
+
+  useEffect(() => {
+    const unsubscribe = dispatcher.subscribe("showProjectIcons", (val) => {
+      iconHolderRef.current.style.visibility = val ? "visible" : "hidden";
     })
     return unsubscribe;
   }, [])
@@ -82,6 +90,7 @@ export default function Main() {
   }
 
   function closeDetails() {
+    dispatcher.dispatch("showProjectIcons", true);
     setShowProject(null);
   }
 
@@ -89,19 +98,20 @@ export default function Main() {
 
   return (
     <main 
-      className="relative py-48 sm:pb-48 vert:mt-8 vert:pt-12 overflow-hidden"
+      className="relative w-full py-48 sm:pb-48 vert:mt-8 vert:pt-12 overflow-hidden"
       ref={mainViewRef}>
 
-      <div
-        onClick={handleProjectSelect} 
-        className="icon_holder flex w-full flex-wrap justify-center gap-6">
+      {showProject && 
+        <ProjectDetails 
+          projectArray={projectArray}
+          details={showProject} 
+          containerRef={mainViewRef} 
+          closeDetails={closeDetails} />}
 
-        {showProject && 
-          <ProjectDetails 
-            projectArray={projectArray}
-            details={showProject} 
-            containerRef={mainViewRef} 
-            closeDetails={closeDetails} />}
+      <div
+        onClick={handleProjectSelect}
+        ref={iconHolderRef}
+        className="icon_holder flex w-full flex-wrap justify-center gap-6">
 
         {projectArray.map((x, i) => <ProjectIcon key={x.name} project={x} id={i} />)}
 
