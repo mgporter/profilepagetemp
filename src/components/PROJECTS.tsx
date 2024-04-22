@@ -1,31 +1,31 @@
-import image_processor_image from "../screenshots/image_processor_screenshot.jpg";
-import blubbles_world_image from "../screenshots/blubbles_world.png";
-import wordle_wrangler_image from "../screenshots/java03_wordle-wrangler.png";
-import moana_memory_cards_image from "../screenshots/top11_screenshot.jpg";
-import knights_travails_image from "../screenshots/java01_Knights-travails.jpg";
-import battleship_online_image from "../screenshots/top10b_screenshot.jpg";
-import battleship_singleplayer_image from "../screenshots/top10_screenshot.jpg";
-import linked_list_image from "../screenshots/top09_screenshot.png";
-import weather_app_image from "../screenshots/top08_screenshot.png";
-import todo_list_image from "../screenshots/top07_screenshot.png";
-import restaurant_page_image from "../screenshots/top06_screenshot.jpg";
-import tic_tac_toe_image from "../screenshots/top05_screenshot.png";
-import book_library_image from "../screenshots/top04_screenshot.png";
-import calculator_image from "../screenshots/top03_screenshot.png";
-import etch_a_sketch_image from "../screenshots/top02_screenshot.png";
-import rps_game_image from "../screenshots/top01_screenshot.png";
-import audiveris_image from "../screenshots/audiveris_logo.png";
-
-import knights_travails_gif from "../images/java01_knights-travails.gif";
-import wordle_wrangler_gif from "../images/java03_wordlewrangler.gif";
-
 import { VNode } from "preact";
+
+type globImport = Record<string, {default: string}>;
+
+const fullImages = import.meta.glob("/src/screenshots/webp_full/*", {eager: true}) as globImport;
+const thumbnailImages = import.meta.glob("/src/screenshots/webp_thumbnails/*", {eager: true}) as globImport;
+
+const images: Record<string, string> = {};
+
+// convert filepaths from "/src/screenshots/webp_full/myimage.webp" to "myimage"
+// Use these new paths are keys to each image path.
+for (const path in fullImages) {
+  const name = path.substring(path.lastIndexOf("/") + 1, path.lastIndexOf("."));
+  images[name] = fullImages[path].default;
+}
+
+for (const path in thumbnailImages) {
+  const name = path.substring(path.lastIndexOf("/") + 1, path.lastIndexOf("."));
+  images[name] = thumbnailImages[path].default;
+}
+
+
 
 // const inlinePictureBig = "border-2 border-slate-400 w-[90%] self-center";
 
-const STANDARD_1080P: Dimensions_2d = [1920, 1080];
-
 export type Dimensions_2d = [number, number];
+
+const STANDARD_1080P: Dimensions_2d = [1920, 1080];
 
 export type ProjectType = "Javascript" 
   | "TypeScript" 
@@ -85,8 +85,8 @@ const projects: Project[] = [
     style: "default",
     types: ["TypeScript", "React", "WebAssembly", "C++"],
     featured: true,
-    imageThumbnailSrc: image_processor_image,
-    imageSrc: image_processor_image,
+    imageThumbnailSrc: images["image_processor_thumbnail"],
+    imageSrc: images["image_processor"],
     imageDimensions: [1874, 1080],
     livePreviewUrl: "https://image-processor-xi.vercel.app/",
     sourceUrl: "https://github.com/mgporter/image_processor",
@@ -106,8 +106,8 @@ const projects: Project[] = [
     style: "default",
     types: ["TypeScript", "React", "Three.js"],
     featured: true,
-    imageThumbnailSrc: blubbles_world_image,
-    imageSrc: blubbles_world_image,
+    imageThumbnailSrc: images["blubbles_world_thumbnail"],
+    imageSrc: images["blubbles_world"],
     imageDimensions: STANDARD_1080P,
     livePreviewUrl: "https://blubbleworld-01-client.vercel.app/",
     sourceUrl: "https://github.com/mgporter/blubbleworld-01-client",
@@ -126,8 +126,8 @@ const projects: Project[] = [
     style: "default",
     types: ["Javascript", "Three.js", "React", "Java", "Database", "WebSockets"],
     featured: true,
-    imageThumbnailSrc: battleship_online_image,
-    imageSrc: battleship_online_image,
+    imageThumbnailSrc: images["battleship_online_thumbnail"],
+    imageSrc: images["battleship_online"],
     imageDimensions: STANDARD_1080P,
     livePreviewUrl: "https://mgporter.github.io/top10b_battleship_online_client/",
     sourceUrl: "https://github.com/mgporter/top10b_battleship_online_client",
@@ -148,8 +148,8 @@ const projects: Project[] = [
     style: "default",
     types: ["Java", "Swing", "Open-Source Contributor"],
     featured: false,
-    imageThumbnailSrc: audiveris_image,
-    imageSrc: audiveris_image,
+    imageThumbnailSrc: images["audiveris"],
+    imageSrc: images["audiveris"],
     imageDimensions: [567, 260],
     livePreviewUrl: null,
     sourceUrl: "https://github.com/Audiveris/audiveris",
@@ -166,8 +166,8 @@ const projects: Project[] = [
     style: "default",
     types: ["Java"],
     featured: false,
-    imageThumbnailSrc: wordle_wrangler_image,
-    imageSrc: wordle_wrangler_gif,
+    imageThumbnailSrc: images["wordle_wrangler_thumbnail"],
+    imageSrc: images["wordle_wrangler"],
     imageDimensions: [1376, 675],
     livePreviewUrl: null,
     sourceUrl: "https://github.com/mgporter/java03_wordle-wrangler",
@@ -187,9 +187,9 @@ const projects: Project[] = [
     style: "default",
     types: ["Javascript", "React"],
     featured: false,
-    imageThumbnailSrc: moana_memory_cards_image,
-    imageSrc: moana_memory_cards_image,
-    imageDimensions: STANDARD_1080P,
+    imageThumbnailSrc: images["moana_memory_cards_thumbnail"],
+    imageSrc: images["moana_memory_cards"],
+    imageDimensions: [1883, 1059],
     livePreviewUrl: "https://top11-memory-cards.vercel.app/",
     sourceUrl: "https://github.com/mgporter/top11_memory-cards",
     heading: "Click on each character once and only once, but beware: the cards shuffle themselves after each click!",
@@ -209,8 +209,8 @@ const projects: Project[] = [
     style: "default",
     types: ["Java"],
     featured: false,
-    imageThumbnailSrc: knights_travails_image,
-    imageSrc: knights_travails_gif,
+    imageThumbnailSrc: images["knights_travails_thumbnail"],
+    imageSrc: images["knights_travails"],
     imageDimensions: [1107, 651],
     livePreviewUrl: null,
     sourceUrl: "https://github.com/mgporter/java01_knights-travails",
@@ -229,8 +229,8 @@ const projects: Project[] = [
     style: "default",
     types: ["Javascript", "Three.js"],
     featured: false,
-    imageThumbnailSrc: battleship_singleplayer_image,
-    imageSrc: battleship_singleplayer_image,
+    imageThumbnailSrc: images["battleship_singleplayer_thumbnail"],
+    imageSrc: images["battleship_singleplayer"],
     imageDimensions: STANDARD_1080P,
     livePreviewUrl: "https://mgporter.github.io/top10_battleship/",
     sourceUrl: "https://github.com/mgporter/top10_battleship",
@@ -254,19 +254,16 @@ const projects: Project[] = [
     style: "default",
     types: ["TypeScript", "Preact"],
     featured: false,
-    imageThumbnailSrc: image_processor_image,
-    imageSrc: image_processor_image,
-    imageDimensions: [1874, 1080],
+    imageThumbnailSrc: images["profile_website_thumbnail"],
+    imageSrc: images["profile_website"],
+    imageDimensions: [1873, 1054],
     livePreviewUrl: "https://image-processor-xi.vercel.app/",
     sourceUrl: "https://github.com/mgporter/image_processor",
-    heading: "The website you are viewing now. A lightweight portfolio showcase made with Preact and Typescript.",
+    heading: "The website you are viewing now. A lightweight portfolio showcase made with Preact, Typescript, and GRADIENTS ;) .",
     description: 
       <>
-        <p>Allows users to upload a picture, process it, and save the results back to disk.</p>
-        <p>Utilizes C++ code compiled to WebAssembly with emscripten to accelerate image processing (it only does a gaussian blur right now though).</p>
-        <p>Data is transferred using Javascript's ArrayBuffers (or pointers to ArrayBuffers). The program manages the WebAssembly memory manually (that is, without using emscripten's 'glue code') in order to keep the wasm code size small (~1,299 bytes).</p>
-        <p>Performance of calculation time and overhead time is measured on each run. Even with its extra overhead, the WebAssembly module easily beats the Javascript implementation by a factor of 10.</p>
-        <p>Javascript's Web Workers API is used in order to keep the thread responsive during calculations.</p>
+        <p>This is a simple website for displaying some of my programming work. It is meant to be lightweight and responsive. Asides from using Preact to cut down on overhead code, it also contains simple optimizations to improve the user experience on slower connections. For example, images (and there are a lot of them) are given a placeholder while they are loading.</p>
+        <p>I couldn't help but include one snazzy effect when the user opens a project. The page 'bubbles' out and is replaced by the project description. This effect actually has quite a few moving parts, since it is not usually possible to clip (or delete) a portion of an element starting from the inside. See if you can figure out how it's done! As far as hooks, this effect does involve the relatively little-used useLayoutEffect hook to get accurate measurements of dom elements (complicated greatly by the presence/absence of the scrollbar!).</p>
       </>,
   },
   {
@@ -275,8 +272,8 @@ const projects: Project[] = [
     style: "default",
     types: ["Javascript"],
     featured: false,
-    imageThumbnailSrc: linked_list_image,
-    imageSrc: linked_list_image,
+    imageThumbnailSrc: images["linked_list_thumbnail"],
+    imageSrc: images["linked_list"],
     imageDimensions: STANDARD_1080P,
     livePreviewUrl: "https://mgporter.github.io/top09_linkedlist/",
     sourceUrl: "https://github.com/mgporter/top09_linkedlist",
@@ -296,8 +293,8 @@ const projects: Project[] = [
     style: "default",
     types: ["Javascript"],
     featured: false,
-    imageThumbnailSrc: weather_app_image,
-    imageSrc: weather_app_image,
+    imageThumbnailSrc: images["weather_app_thumbnail"],
+    imageSrc: images["weather_app"],
     imageDimensions: STANDARD_1080P,
     livePreviewUrl: "https://mgporter.github.io/top08_weather-app/",
     sourceUrl: "https://github.com/mgporter/top08_weather-app",
@@ -317,8 +314,8 @@ const projects: Project[] = [
     style: "default",
     types: ["Javascript"],
     featured: false,
-    imageThumbnailSrc: todo_list_image,
-    imageSrc: todo_list_image,
+    imageThumbnailSrc: images["todo_list_app_thumbnail"],
+    imageSrc: images["todo_list_app"],
     imageDimensions: STANDARD_1080P,
     livePreviewUrl: "https://mgporter.github.io/top07_todo-list/",
     sourceUrl: "https://github.com/mgporter/top07_todo-list",
@@ -340,9 +337,9 @@ const projects: Project[] = [
     style: "default",
     types: ["Javascript"],
     featured: false,
-    imageThumbnailSrc: restaurant_page_image,
-    imageSrc: restaurant_page_image,
-    imageDimensions: STANDARD_1080P,
+    imageThumbnailSrc: images["restaurant_page_thumbnail"],
+    imageSrc: images["restaurant_page"],
+    imageDimensions: [1875, 1055],
     livePreviewUrl: "https://mgporter.github.io/top06_restaurant-page/",
     sourceUrl: "https://github.com/mgporter/top06_restaurant-page",
     heading: "A tabbed navigation site with a spiffy background that uses webpack to bundle all dependencies and assets.",
@@ -360,8 +357,8 @@ const projects: Project[] = [
     style: "default",
     types: ["Javascript", "Beginner"],
     featured: false,
-    imageThumbnailSrc: tic_tac_toe_image,
-    imageSrc: tic_tac_toe_image,
+    imageThumbnailSrc: images["ultimate_tic_tac_toe_thumbnail"],
+    imageSrc: images["ultimate_tic_tac_toe"],
     imageDimensions: STANDARD_1080P,
     livePreviewUrl: "https://mgporter.github.io/top05_tic-tac-toe/",
     sourceUrl: "https://github.com/mgporter/top05_tic-tac-toe",
@@ -381,9 +378,9 @@ const projects: Project[] = [
     style: "default",
     types: ["Javascript", "Beginner"],
     featured: false,
-    imageThumbnailSrc: book_library_image,
-    imageSrc: book_library_image,
-    imageDimensions: STANDARD_1080P,
+    imageThumbnailSrc: images["bookshelf_app_thumbnail"],
+    imageSrc: images["bookshelf_app"],
+    imageDimensions: [1900, 1069],
     livePreviewUrl: "https://mgporter.github.io/top04_library/",
     sourceUrl: "https://github.com/mgporter/top04_library",
     heading: "A skeuomorphic virtual bookshelf that displays virtual book entries and information like books on a shelf.",
@@ -401,8 +398,8 @@ const projects: Project[] = [
     style: "default",
     types: ["Javascript", "Beginner"],
     featured: false,
-    imageThumbnailSrc: calculator_image,
-    imageSrc: calculator_image,
+    imageThumbnailSrc: images["simple_calculator_thumbnail"],
+    imageSrc: images["simple_calculator"],
     imageDimensions: STANDARD_1080P,
     livePreviewUrl: "https://mgporter.github.io/top03_calculator/",
     sourceUrl: "https://github.com/mgporter/top03_calculator",
@@ -421,8 +418,8 @@ const projects: Project[] = [
     style: "default",
     types: ["Javascript", "Beginner"],
     featured: false,
-    imageThumbnailSrc: etch_a_sketch_image,
-    imageSrc: etch_a_sketch_image,
+    imageThumbnailSrc: images["etch_a_sketch_thumbnail"],
+    imageSrc: images["etch_a_sketch"],
     imageDimensions: STANDARD_1080P,
     livePreviewUrl: "https://mgporter.github.io/top02_etch-a-sketch/",
     sourceUrl: "https://github.com/mgporter/top02_etch-a-sketch",
@@ -440,8 +437,8 @@ const projects: Project[] = [
     style: "default",
     types: ["Javascript", "Beginner"],
     featured: false,
-    imageThumbnailSrc: rps_game_image,
-    imageSrc: rps_game_image,
+    imageThumbnailSrc: images["rock_paper_scissors_thumbnail"],
+    imageSrc: images["rock_paper_scissors"],
     imageDimensions: STANDARD_1080P,
     livePreviewUrl: "https://mgporter.github.io/top01_rock-paper-scissors/",
     sourceUrl: "https://github.com/mgporter/top01_rock-paper-scissors",

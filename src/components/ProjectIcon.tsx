@@ -3,11 +3,12 @@ import { Project } from "./PROJECTS"
 
 interface ProjectIconProps {
   project: Project;
+  id: number;
 }
 
 const MAX_TYPES = 5;
 
-export default function ProjectIcon({ project }: ProjectIconProps) {
+export default function ProjectIcon({ project, id }: ProjectIconProps) {
 
   const iconRef = useRef<HTMLDivElement>(null!);
   const [loading, setLoading] = useState(true);
@@ -19,15 +20,15 @@ export default function ProjectIcon({ project }: ProjectIconProps) {
   const loadOpacity = loading ? " opacity-0" : " ";
 
   return (
-    <div data-id={project.id} 
-      className={`project group relative aspect-[2.2] w-64 overflow-clip 
+    <div data-id={id} 
+      className={`project group relative aspect-[2.2] w-64 overflow-hidden 
         cursor-pointer select-none border-2 transition-all
         ${project.style === "faded" ? " opacity-60" : " "}
         ${project.style === "emphasized" ? " border-violet-100 scale-105" : " border-transparent"}
         ${loading ? " border-blue-600 bg-white/10" : " "} `}
       ref={iconRef}>
 
-      <p className={`absolute top-1 left-1 z-20 px-[2px] rounded-sm font-medium
+      <p className={`absolute top-1 left-1 z-20 px-[2px] rounded-sm font-semibold text-white
         group-hover:opacity-100 text-base ${loading ? " opacity-50" : " opacity-0 bg-black/40"}`}>{project.name} {project.featured && "★"}</p>
 
       <div className={`absolute bottom-1 left-1 z-20 text-xs flex gap-2 text-rose-100

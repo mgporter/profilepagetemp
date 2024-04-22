@@ -67,7 +67,7 @@ export default function Main() {
         target.style.zIndex = "200";
 
         setShowProject({
-          project: projects[Number(target.dataset.id)],
+          projectIndex: Number(target.dataset.id),
           thumbnailDiv: target,
         });
 
@@ -89,7 +89,7 @@ export default function Main() {
 
   return (
     <main 
-      className="relative py-48 sm:pt-12 sm:pb-48 overflow-clip"
+      className="relative py-48 sm:pb-48 vert:mt-8 vert:pt-12 overflow-hidden"
       ref={mainViewRef}>
 
       <div
@@ -97,9 +97,13 @@ export default function Main() {
         className="icon_holder flex w-full flex-wrap justify-center gap-6">
 
         {showProject && 
-          <ProjectDetails details={showProject} containerRef={mainViewRef} closeDetails={closeDetails} />}
+          <ProjectDetails 
+            projectArray={projectArray}
+            details={showProject} 
+            containerRef={mainViewRef} 
+            closeDetails={closeDetails} />}
 
-        {projectArray.map(x => <ProjectIcon key={x.name} project={x} />)}
+        {projectArray.map((x, i) => <ProjectIcon key={x.name} project={x} id={i} />)}
 
       </div>
     </main>

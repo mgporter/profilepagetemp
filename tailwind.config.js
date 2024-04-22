@@ -9,7 +9,9 @@ export default {
     extend: {},
     screens: {
       'md': {'max': '1024px'},
-      'sm': {'max': '720px'}
+      'vert': {'max': '896px'},
+      'sm': {'max': '720px'},
+      'mini': {'max': '560px'}
     }
   },
   plugins: [],

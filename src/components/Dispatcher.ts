@@ -5,6 +5,7 @@ export type DispatcherEvent = keyof DispatcherMap;
 export interface DispatcherMap {
   projectTypeSelected: ProjectType[];
   selectFeatured: null;
+  enableProjectControls: boolean;
 }
 
 // eslint-disable-next-line
@@ -15,6 +16,7 @@ class Dispatcher {
   private Events: DispatcherEventObj = {
     projectTypeSelected: [],
     selectFeatured: [],
+    enableProjectControls: [],
   }
   
   constructor() {}

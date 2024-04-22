@@ -42,13 +42,13 @@ export default function Nav() {
 
       <div className="navcontainer flex flex-col items-start fixed sm:static sm:max-w-[30rem]">
 
-        <div className="title relative z-10 size-48 self-center mt-8 mb-[-48px] ml-[-3rem]">
+        <div className="title relative z-10 size-44 self-center mt-8 mb-[-48px] ml-[-4rem]">
           <img src={profileColorPic} className="relative rounded-full z-20"></img>
-          <div className="absolute z-10 top-8 left-8 size-56 scale-y-[0.2] scale-x-[1.1] translate-y-[2rem] rounded-[100%] bg-stone-600/60"></div>
-          <div className="absolute z-[9] top-8 left-0 size-64 scale-y-[0.21] scale-x-[1.1] translate-y-[1.2rem] rounded-[100%] bg-black/60"></div>
+          <div className="absolute z-10 top-6 left-10 size-52 scale-y-[0.2] scale-x-[1.1] translate-y-[2rem] rounded-[100%] bg-stone-600/60"></div>
+          <div className="absolute z-[9] top-6 left-2 size-60 scale-y-[0.21] scale-x-[1.1] translate-y-[1.2rem] rounded-[100%] bg-black/60"></div>
         </div>
         
-        <h1 className="title relative z-20 text-7xl mb-8 self-center">mgporter</h1>
+        <h1 className="title relative z-20 text-6xl mb-8 self-center">mgporter</h1>
 
         <div className="relative z-20 flex flex-col gap-1 mb-12 text-lg ">
           <a className="flex group items-center gap-2 hover:text-white" href="https://github.com/mgporter" target="_blank">

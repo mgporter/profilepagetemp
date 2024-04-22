@@ -1,0 +1,89 @@
+/* Project Swipe Effects */
+
+.swipe_exit_left {
+  animation: 0.4s cubic-bezier(.5,0,1,.5) 0s 1 forwards normal running translateleft115; 
+}
+
+.swipe_exit_left .details_placeholder_image {
+  animation: 0.4s cubic-bezier(.5,0,1,.5) 0s 1 forwards running translateleft115; 
+}
+
+.swipe_enter_right {
+  animation: 0.4s cubic-bezier(.5,0,1,.2) 0s 1 backwards reverse running translateright150; 
+}
+
+.swipe_enter_right .details_placeholder_image {
+  animation: 0.4s cubic-bezier(0,0.5,0.5,1) 0s 1 forwards normal running leadleft; 
+}
+
+
+
+.swipe_exit_right {
+  animation: 0.4s cubic-bezier(.5,0,1,.5) 0s 1 forwards normal running translateright115; 
+}
+
+.swipe_exit_right .details_placeholder_image {
+  animation: 0.4s cubic-bezier(.5,0,1,.5) 0s 1 forwards running translateright115; 
+}
+
+.swipe_enter_left {
+  animation: 0.4s cubic-bezier(.5,0,1,.2) 0s 1 backwards reverse running translateleft150; 
+}
+
+.swipe_enter_left .details_placeholder_image {
+  animation: 0.4s cubic-bezier(0,0.5,0.5,1) 0s 1 forwards normal running leadright; 
+}
+
+@keyframes translateleft115 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(-115%, 0);
+  }
+}
+
+@keyframes translateleft150 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(-115%, 0);
+  }
+}
+
+@keyframes translateright115 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(115%, 0);
+  }
+}
+
+@keyframes translateright150 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(115%, 0);
+  }
+}
+
+@keyframes leadleft {
+  0% {
+    transform: translate(-50%, 0);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes leadright {
+  0% {
+    transform: translate(50%, 0);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}

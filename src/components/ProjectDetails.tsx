@@ -4,17 +4,22 @@ import { ProjectDetailsPage } from "./ProjectDetailsPage";
 import ProjectDetailsTransition from "./ProjectDetailsTransition";
 
 export interface DetailsProp {
-  project: Project;
+  projectIndex: number;
   thumbnailDiv: HTMLElement;
 }
 
 export interface ProjectDetailsProps {
+  projectArray: Project[];
   details: DetailsProp;
   containerRef: MutableRef<HTMLDivElement>;
   closeDetails: () => void;
 }
 
-export default function ProjectDetails({details, containerRef, closeDetails}: ProjectDetailsProps) {
+export default function ProjectDetails({
+  projectArray,
+  details, 
+  containerRef, 
+  closeDetails}: ProjectDetailsProps) {
 
   const detailsPageRef = useRef<HTMLImageElement>(null!);
 
@@ -29,13 +34,18 @@ export default function ProjectDetails({details, containerRef, closeDetails}: Pr
       {ready && 
         <ProjectDetailsTransition 
           thumbnailDiv={details.thumbnailDiv}
-          project={details.project}
           containerRef={containerRef}
-          detailsPageRef={detailsPageRef} />}
+          detailsPageRef={detailsPageRef}> 
+          <img 
+            src={projectArray[details.projectIndex].imageSrc} 
+            alt={projectArray[details.projectIndex].name} 
+            className="w-full aspect-auto"></img>
+        </ProjectDetailsTransition>}
 
       <ProjectDetailsPage 
         ref={detailsPageRef} 
-        project={details.project} 
+        projectArray={projectArray}
+        projectIndex={details.projectIndex} 
         closeDetails={closeDetails} 
         onComponentLoad={pageContentReady} />
     </>
