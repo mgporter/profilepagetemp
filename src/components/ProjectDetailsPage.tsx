@@ -59,14 +59,14 @@ export const ProjectDetailsPage = forwardRef((props: ProjectDetailsPageProps, re
 
       <div className="project_details_inner flex flex-col gap-4 items-stretch" ref={pageContentRef}>
 
-        <div className="flex flex-col mx-4 gap-2 w-full px-2">
+        <div className="flex flex-col mx-4 vert:mx-0 gap-2 w-full px-2">
           <h1 className="text-4xl font-bold text-blue-200">{project.name} 
             {project.featured && <span className="text-xl ml-3 text-yellow-200/90">(featured)</span>}
           </h1>
           <h2>{project.heading}</h2>
         </div>
 
-        <ul className="mx-16 sm:ml-6 sm:mr-2 max-w-[30rem] list-['\21E8\0020\0020']">
+        <ul className="mx-16 vert:mx-8 max-w-[30rem] list-['\21E8\0020\0020']">
           {project.livePreviewUrl && <a href={project.livePreviewUrl} target="_blank"><li className={projectLink}>Go to live preview</li></a>}
           <a href={project.sourceUrl} target="_blank"><li className={projectLink}>View the source on Github</li></a>
         </ul>
@@ -77,7 +77,8 @@ export const ProjectDetailsPage = forwardRef((props: ProjectDetailsPageProps, re
           onLoad={onPageLoad}
           style={{aspectRatio: project.imageDimensions[0] / project.imageDimensions[1]}}></img>
 
-        <ul className="flex items-center bg-indigo-950 border-t border-indigo-600 mx-8 sm:mx-2 flex-wrap mb-4 p-2 gap-4">
+        <ul className="flex items-center bg-indigo-950 border-t border-indigo-600 
+          mx-8 vert:mx-0 flex-wrap mb-4 p-2 gap-4">
           <li className="px-2 font-bold">Tech stack:</li>
           {project.types.map(type => (
             <li className=" bg-slate-300 text-black px-2 py-1 rounded-md font-medium">{type}</li>

@@ -10,14 +10,14 @@ interface ProjectDetailsControlsProps {
   closeDetails: () => void;
 }
 
-const controlLabelStyle = 
-  "flex items-center gap-2 px-2 font-bold text-2xl \
-  transition-colors text-indigo-50/90 group-hover:text-yellow-300";
-
-const controlDivStyle = "group flex justify-center items-center gap-2 \
+const controlDivStyle = "group flex justify-center items-center gap-2 mini:justify-self-center \
   mini:row-start-2 p-2 cursor-pointer rounded-xl \
   border-2 border-transparent \
   hover:border-yellow-200/60 active:bg-sky-300/30 "
+
+const controlLabelStyle = 
+  "flex items-center gap-2 px-2 font-bold text-2xl \
+  transition-colors text-indigo-50/90 group-hover:text-yellow-300";
 
 export default function ProjectDetailsControls({
   index,
@@ -32,12 +32,10 @@ export default function ProjectDetailsControls({
     const unsubscribe = dispatcher.subscribe("enableProjectControls", (val) => {
       setEnabled(val);
     });
-
     return unsubscribe;
   }, [])
 
   function swipe(action: "goforward" | "goback") {
-    // setDisabled(true);
     dispatcher.dispatch("enableProjectControls", false);
 
     let newIndex, enterAction, exitAction;
@@ -61,9 +59,6 @@ export default function ProjectDetailsControls({
             pageContentRef.current.classList.remove(enterAction);
             dispatcher.dispatch("enableProjectControls", true);
           }
-          // setTimeout(() => {
-          //   setDisabled(false);
-          // }, 500);  
         }
         pageContentRef.current.classList.add(enterAction);
 
@@ -80,7 +75,7 @@ export default function ProjectDetailsControls({
       ${enabled ? " " : " pointer-events-none"}`}>
       
 
-      <div className={controlDivStyle + " flex-wrap justify-self-start"}
+      <div className={controlDivStyle + " mini:flex-col justify-self-start"}
         onClick={() => swipe("goback")}>
         <div className={controlLabelStyle}>
           <span>❮❮</span>
@@ -105,7 +100,7 @@ export default function ProjectDetailsControls({
       </div>
 
 
-      <div className={controlDivStyle + " flex-wrap-reverse justify-self-end"}>
+      <div className={controlDivStyle + " mini:flex-col-reverse justify-self-end"}>
         <img 
           src={projectArray[index.next].imageThumbnailSrc} 
           className="h-10 brightness-90 aspect-video object-cover rounded-sm border border-indigo-50/30">
