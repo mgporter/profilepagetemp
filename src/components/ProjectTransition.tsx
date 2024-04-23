@@ -1,13 +1,13 @@
+import { VNode } from "preact";
 import { MutableRef, useEffect, useLayoutEffect, useRef, useState } from "preact/hooks";
-import ProjectDetailsMovingImg from "./ProjectDetailsMovingImg";
-import { ComponentChildren } from "preact";
+import ProjectTransitionMovingImg from "./ProjectTransitionMovingImg";
 
-interface ProjectDetailsTransitionProps {
-  thumbnailDiv: HTMLElement;
-  children: ComponentChildren;
+interface ProjectTransitionProps {
+  thumbnailDiv: HTMLElement; 
   containerRef: MutableRef<HTMLDivElement>;
-  detailsPageRef: MutableRef<HTMLDivElement>;
+  projectImgRef: MutableRef<HTMLImageElement>;
   onEffectComplete: () => void;
+  tempImage: VNode;
 }
 
 const EMPTY_DOM_RECT: DOMRect = {
@@ -22,12 +22,13 @@ const EMPTY_DOM_RECT: DOMRect = {
   toJSON: () => {}
 }
 
-export default function ProjectDetailsTransition({
-  thumbnailDiv, 
-  children, 
-  containerRef, 
-  detailsPageRef,
-  onEffectComplete}: ProjectDetailsTransitionProps) {
+export default function ProjectTransition({
+  thumbnailDiv,
+  containerRef,
+  projectImgRef,
+  onEffectComplete,
+  tempImage}: ProjectTransitionProps) {
+
 
   const bubbleRef = useRef<HTMLDivElement>(null!);
   const [containerRect, setContainerRect] = useState(EMPTY_DOM_RECT);
@@ -39,12 +40,9 @@ export default function ProjectDetailsTransition({
 
     const mainRect = containerRef.current.getBoundingClientRect();
     const thumbnailDivRect = thumbnailDiv.getBoundingClientRect();
-    const placeholderImgTemp = detailsPageRef.current.querySelector("img.details_placeholder_image");
+    const projectImageRect = projectImgRef.current.getBoundingClientRect();
 
-    if (placeholderImgTemp instanceof HTMLImageElement) {
-      setPlaceholderImgRect(placeholderImgTemp.getBoundingClientRect());
-      setShowMovingImg(true);
-    }
+    setShowMovingImg(true);
 
     // Set height of main element to the content height
     const oldHeight = containerRef.current.style.height;
@@ -53,7 +51,7 @@ export default function ProjectDetailsTransition({
 
     setContainerRect(mainRect);
     setThumbnailRect(thumbnailDivRect);
-    
+    setPlaceholderImgRect(projectImageRect);
 
     return () => {
       // return main's height to its original settings
@@ -99,6 +97,13 @@ export default function ProjectDetailsTransition({
     clipPath: `circle(8% at ${centerXPercent}% ${centerYPercent}%)`,
   }
 
+  function effectCompleteCallback() {
+    projectImgRef.current.style.visibility = "visible";
+    bubbleRef.current.remove();
+    onEffectComplete();
+  }
+  
+
   return (
     <>
 
@@ -108,15 +113,13 @@ export default function ProjectDetailsTransition({
       </div>
       
       {showMovingImg &&
-        <ProjectDetailsMovingImg 
+        <ProjectTransitionMovingImg 
           placeholderImgRect={placeholderImgRect}
           thumbnailRect={thumbnailRect} 
           containerRect={containerRect}
-          onEffectComplete={onEffectComplete}>
-          {children}
-        </ProjectDetailsMovingImg>}
+          onEffectComplete={effectCompleteCallback}
+          tempImage={tempImage} />}
 
     </>
-
   )
 }

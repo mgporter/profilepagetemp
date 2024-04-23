@@ -1,26 +1,25 @@
 import { useEffect, useRef } from "preact/hooks";
-import { ComponentChildren } from "preact";
+import { VNode } from "preact";
 
 interface ProjectDetailsMovingImgProps {
   placeholderImgRect: DOMRect;
   thumbnailRect: DOMRect;
   containerRect: DOMRect;
   onEffectComplete: () => void;
-  children: ComponentChildren
+  tempImage: VNode;
 }
 
-export default function ProjectDetailsMovingImg({
+export default function ProjectTransitionMovingImg({
   placeholderImgRect,
   thumbnailRect, 
   containerRect,
   onEffectComplete,
-  children}: ProjectDetailsMovingImgProps) {
+  tempImage}: ProjectDetailsMovingImgProps) {
 
   const movingImgRef = useRef<HTMLImageElement>(null!);
 
   useEffect(() => {
     const { left: imgLeft, top: imgTop, width: imgWidth, height: imgHeight } = placeholderImgRect;
-    console.log(placeholderImgRect)
 
     const placeholderCenterX = imgLeft + (imgWidth / 2) - containerRect.left;
     const placeholderCenterY = imgTop + (imgHeight / 2) - containerRect.top;
@@ -70,8 +69,7 @@ export default function ProjectDetailsMovingImg({
   return (
     <div ref={movingImgRef} className="absolute z-[120] overflow-hidden" style={movingImgStyle}
       onAnimationEnd={movingImgTransitionEnd}>
-      {children}
-      {/* <img src={project.imageSrc} alt={project.name} className="w-full aspect-auto"></img> */}
+      {tempImage}
     </div>
   )
 }

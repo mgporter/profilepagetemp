@@ -5,6 +5,7 @@ import { dispatcher } from "./Dispatcher";
 interface ProjectDetailsControlsProps {
   index: {cur: number, prev: number, next: number};
   projectArray: Project[];
+  enableControls: boolean;
   setIndex: (a: number) => void;
   pageContentRef: MutableRef<HTMLDivElement>;
   closeDetails: () => void;
@@ -22,11 +23,12 @@ const controlLabelStyle =
 export default function ProjectDetailsControls({
   index,
   projectArray,
+  enableControls,
   setIndex, 
   pageContentRef, 
   closeDetails}: ProjectDetailsControlsProps) {
 
-  const [enabled, setEnabled] = useState(false);
+  const [enabled, setEnabled] = useState(enableControls);
 
   useEffect(() => {
     const unsubscribe = dispatcher.subscribe("enableProjectControls", (val) => {
@@ -100,13 +102,13 @@ export default function ProjectDetailsControls({
       </div>
 
 
-      <div className={controlDivStyle + " mini:flex-col-reverse justify-self-end"}>
+      <div className={controlDivStyle + " mini:flex-col-reverse justify-self-end"}
+        onClick={() => swipe("goforward")}>
         <img 
           src={projectArray[index.next].imageThumbnailSrc} 
           className="h-10 brightness-90 aspect-video object-cover rounded-sm border border-indigo-50/30">
         </img>
-        <div className={controlLabelStyle}
-          onClick={() => swipe("goforward")}>
+        <div className={controlLabelStyle}>
           <span>Next</span>
           <span>❯❯</span>
         </div>

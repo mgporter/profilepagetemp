@@ -2,7 +2,9 @@ import { TargetedEvent, useEffect, useRef, useState } from "preact/compat";
 import { projects } from "./PROJECTS"
 import ProjectIcon from "./ProjectIcon"
 import { dispatcher } from "./Dispatcher";
-import ProjectDetails, { DetailsProp } from "./ProjectDetails";
+import ProjectDetailsPage from "./ProjectDetailsPage";
+
+const ISMOBILEDEVICE = window.innerHeight > window.innerWidth;
 
 
 export default function Main() {
@@ -10,12 +12,15 @@ export default function Main() {
   const [projectArray, setProjectArray] = useState(projects);
   const mainViewRef = useRef<HTMLDivElement>(null!);
   const iconHolderRef = useRef<HTMLDivElement>(null!);
-  const [showProject, setShowProject] = useState<DetailsProp | null>(null);
+  const [showIconHolder, setShowIconHolder] = useState(true);
+  const [projectDiv, setProjectDiv] = useState<HTMLElement | null>(null);
+  // const [useTransition, setUseTransition] = useState(!ISMOBILEDEVICE);
+  const [useTransition] = useState(!ISMOBILEDEVICE);
 
   useEffect(() => {
     const unsubscribe = dispatcher.subscribe("projectTypeSelected", types => {
 
-        closeDetails();
+        setProjectDiv(null);
 
         const projectsCopy = [...projects];
         if (types.length === 0) {
@@ -49,7 +54,7 @@ export default function Main() {
   useEffect(() => {
     const unsubscribe = dispatcher.subscribe("selectFeatured", () => {
 
-      closeDetails();
+      setProjectDiv(null);
 
       const projectsCopy = [...projects];
       projectsCopy.forEach(x => x.featured ? x.style = "emphasized" : x.style = "faded");
@@ -60,7 +65,8 @@ export default function Main() {
 
   useEffect(() => {
     const unsubscribe = dispatcher.subscribe("showProjectIcons", (val) => {
-      iconHolderRef.current.style.visibility = val ? "visible" : "hidden";
+      // iconHolderRef.current.style.visibility = val ? "visible" : "hidden";
+      iconHolderRef.current.style.display = val ? "flex" : "none";
     })
     return unsubscribe;
   }, [])
@@ -71,17 +77,20 @@ export default function Main() {
       const target = e.target.closest(".project");
       
       if (target instanceof HTMLElement) {
+        console.log(target)
+        setProjectDiv(target);
+        // if (!useTransition) setShowIconHolder(false);
 
-        target.style.zIndex = "200";
+        // target.style.zIndex = "200";
 
-        setShowProject({
-          projectIndex: Number(target.dataset.id),
-          thumbnailDiv: target,
-        });
+        // setShowProject({
+        //   projectIndex: Number(target.dataset.id),
+        //   thumbnailDiv: target,
+        // });
 
-        setTimeout(() => {
-          target.style.zIndex = "";
-        }, 250);
+        // setTimeout(() => {
+        //   target.style.zIndex = "";
+        // }, 250);
 
       }
 
@@ -89,33 +98,42 @@ export default function Main() {
 
   }
 
-  function closeDetails() {
-    dispatcher.dispatch("showProjectIcons", true);
-    setShowProject(null);
-  }
+  // function closeDetails() {
+  //   dispatcher.dispatch("showProjectIcons", true);
+  //   setShowProject(null);
+  // }
 
 
 
   return (
     <main 
-      className="relative w-full py-48 sm:pb-48 vert:mt-8 vert:pt-12 overflow-hidden"
+      className="relative w-full pb-48 vert:mt-8 vert:pt-12 overflow-hidden"
       ref={mainViewRef}>
 
-      {showProject && 
+      {/* {showProject && 
         <ProjectDetails 
           projectArray={projectArray}
           details={showProject} 
-          containerRef={mainViewRef} 
-          closeDetails={closeDetails} />}
+          containerRef={mainViewRef} />} */}
 
-      <div
-        onClick={handleProjectSelect}
-        ref={iconHolderRef}
-        className="icon_holder flex w-full flex-wrap justify-center gap-6">
+      {projectDiv && 
+        <ProjectDetailsPage
+          projectArray={projectArray}
+          projectDiv={projectDiv}
+          useTransition={useTransition}
+          containerRef={mainViewRef}
+          setProjectDiv={setProjectDiv}
+          setShowIconHolder={setShowIconHolder} />}
 
-        {projectArray.map((x, i) => <ProjectIcon key={x.name} project={x} id={i} />)}
+      {showIconHolder &&
+        <div
+          onClick={handleProjectSelect}
+          ref={iconHolderRef}
+          className="icon_holder flex w-full flex-wrap justify-center gap-6 mt-48">
+            {projectArray.map((x, i) => <ProjectIcon key={x.name} project={x} id={i} />)}
+        </div>
+      }
 
-      </div>
     </main>
   )
 }
