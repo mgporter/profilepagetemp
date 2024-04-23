@@ -1,11 +1,13 @@
-import { TargetedEvent, useEffect, useRef, useState } from "preact/compat";
+import { useEffect, useRef, useState } from "preact/compat";
 import { projects } from "./PROJECTS"
-import ProjectIcon from "./ProjectIcon"
 import { dispatcher } from "./Dispatcher";
 import ProjectDetailsPage from "./ProjectDetailsPage";
+import IconHolder from "./IconHolder";
 
 const ISMOBILEDEVICE = window.innerHeight > window.innerWidth;
+const useTransition = !ISMOBILEDEVICE;
 
+export type SelectedProjectType = {div: HTMLElement | null, idx: number, hideIconsAction: () => void} | null;
 
 export default function Main() {
 
@@ -13,14 +15,14 @@ export default function Main() {
   const mainViewRef = useRef<HTMLDivElement>(null!);
   const iconHolderRef = useRef<HTMLDivElement>(null!);
   const [showIconHolder, setShowIconHolder] = useState(true);
-  const [projectDiv, setProjectDiv] = useState<HTMLElement | null>(null);
+  const [selectedProject, setSelectedProject] = useState<SelectedProjectType>(null);
   // const [useTransition, setUseTransition] = useState(!ISMOBILEDEVICE);
-  const [useTransition] = useState(!ISMOBILEDEVICE);
+  // const [useTransition] = useState(!ISMOBILEDEVICE);
 
   useEffect(() => {
     const unsubscribe = dispatcher.subscribe("projectTypeSelected", types => {
 
-        setProjectDiv(null);
+        closeProjectView();
 
         const projectsCopy = [...projects];
         if (types.length === 0) {
@@ -54,7 +56,7 @@ export default function Main() {
   useEffect(() => {
     const unsubscribe = dispatcher.subscribe("selectFeatured", () => {
 
-      setProjectDiv(null);
+      closeProjectView();
 
       const projectsCopy = [...projects];
       projectsCopy.forEach(x => x.featured ? x.style = "emphasized" : x.style = "faded");
@@ -63,46 +65,34 @@ export default function Main() {
     return unsubscribe;
   }, [])
 
+  // useEffect(() => {
+  //   const unsubscribe = dispatcher.subscribe("showProjectIcons", (val) => {
+  //     iconHolderRef.current.style.display = val ? "flex" : "none";
+  //   })
+  //   return unsubscribe;
+  // }, [])
+
   useEffect(() => {
-    const unsubscribe = dispatcher.subscribe("showProjectIcons", (val) => {
-      // iconHolderRef.current.style.visibility = val ? "visible" : "hidden";
-      iconHolderRef.current.style.display = val ? "flex" : "none";
+    const unsubscribe = dispatcher.subscribe("projectSelected", (e) => {
+      let div = e.div;
+      if (!div && iconHolderRef.current != null) {
+        div = iconHolderRef.current.querySelector(`.project[data-id="${e.idx}"]`);
+      }
+      console.log(e)
+      openProjectView(div, e.idx);
     })
     return unsubscribe;
   }, [])
 
-
-  function handleProjectSelect(e: TargetedEvent<HTMLDivElement>) {
-    if (e.target instanceof HTMLElement) {
-      const target = e.target.closest(".project");
-      
-      if (target instanceof HTMLElement) {
-        console.log(target)
-        setProjectDiv(target);
-        // if (!useTransition) setShowIconHolder(false);
-
-        // target.style.zIndex = "200";
-
-        // setShowProject({
-        //   projectIndex: Number(target.dataset.id),
-        //   thumbnailDiv: target,
-        // });
-
-        // setTimeout(() => {
-        //   target.style.zIndex = "";
-        // }, 250);
-
-      }
-
-    } 
-
+  function closeProjectView() {
+    setShowIconHolder(true);
+    setSelectedProject(null);
   }
 
-  // function closeDetails() {
-  //   dispatcher.dispatch("showProjectIcons", true);
-  //   setShowProject(null);
-  // }
-
+  function openProjectView(divOfProject: HTMLElement | null, idx: number) {
+    const hideIcons = () => setShowIconHolder(false);
+    setSelectedProject({div: divOfProject, idx: idx, hideIconsAction: hideIcons});
+  }
 
 
   return (
@@ -110,28 +100,20 @@ export default function Main() {
       className="relative w-full pb-48 vert:mt-8 vert:pt-12 overflow-hidden"
       ref={mainViewRef}>
 
-      {/* {showProject && 
-        <ProjectDetails 
-          projectArray={projectArray}
-          details={showProject} 
-          containerRef={mainViewRef} />} */}
-
-      {projectDiv && 
+      {selectedProject && 
         <ProjectDetailsPage
           projectArray={projectArray}
-          projectDiv={projectDiv}
+          selectedProject={selectedProject}
           useTransition={useTransition}
           containerRef={mainViewRef}
-          setProjectDiv={setProjectDiv}
-          setShowIconHolder={setShowIconHolder} />}
+          closeProjectAction={closeProjectView} />}
 
       {showIconHolder &&
-        <div
-          onClick={handleProjectSelect}
-          ref={iconHolderRef}
-          className="icon_holder flex w-full flex-wrap justify-center gap-6 mt-48">
-            {projectArray.map((x, i) => <ProjectIcon key={x.name} project={x} id={i} />)}
-        </div>
+        <IconHolder 
+          iconHolderRef={iconHolderRef}
+          projectArray={projectArray}
+          selectedProject={selectedProject}
+        />
       }
 
     </main>

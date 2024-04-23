@@ -37,7 +37,7 @@ export default function ProjectTransition({
   const [showMovingImg, setShowMovingImg] = useState(false);
   
   useLayoutEffect(() => {
-
+    
     const mainRect = containerRef.current.getBoundingClientRect();
     const thumbnailDivRect = thumbnailDiv.getBoundingClientRect();
     const projectImageRect = projectImgRef.current.getBoundingClientRect();
@@ -46,8 +46,8 @@ export default function ProjectTransition({
 
     // Set height of main element to the content height
     const oldHeight = containerRef.current.style.height;
-    containerRef.current.style.height = "";
-    containerRef.current.style.height = containerRef.current.scrollHeight + "px";
+    // containerRef.current.style.height = "";
+    // containerRef.current.style.height = containerRef.current.scrollHeight + "px";
 
     setContainerRect(mainRect);
     setThumbnailRect(thumbnailDivRect);

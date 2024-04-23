@@ -23,6 +23,10 @@
   animation: 1s cubic-bezier(0.45, 0, 0.3, 1) 0s 1 forwards normal running movingImgKeyframes;
 }
 
+.thumbnail_remain_then_remove {
+  animation: 0.15s linear 0s 1 forwards normal running thumbnail_remain_then_remove;
+}
+
 @keyframes bubblegrow {
   0% {
     clip-path: circle(1% at var(--bubble-pos-x) var(--bubble-pos-y));
@@ -57,5 +61,17 @@
     height: var(--moving_img_height);
     border-radius: var(--moving_img_borderradius);
     transform: scale(var(--moving_img_scale)) translate(var(--moving_img_translateX), var(--moving_img_translateY));
+  }
+}
+
+@keyframes thumbnail_remain_then_remove {
+  0% {
+    z-index: 110;
+  }
+  99% {
+    z-index: 110;
+  }
+  100% {
+    z-index: unset;
   }
 }

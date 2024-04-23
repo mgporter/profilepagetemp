@@ -5,34 +5,37 @@ import { VNode } from "preact";
 import ProjectTransition from "./ProjectTransition";
 import { MutableRef, useEffect } from "preact/hooks";
 import { dispatcher } from "./Dispatcher";
+import { SelectedProjectType } from "./Main";
 
 interface ProjectDetailsPageProps {
   projectArray: Project[];
-  projectDiv: HTMLElement;
+  selectedProject: SelectedProjectType;
   useTransition: boolean;
   containerRef: MutableRef<HTMLDivElement>;
-  setProjectDiv: (a: HTMLElement | null) => void;
-  setShowIconHolder: (a: boolean) => void;
+  closeProjectAction: () => void;
 }
 
 async function preloadImage(url: string): Promise<VNode<HTMLImageElement>> {
   return <img src={url} className="preloaded_img absolute size-0 top-0 left-0 hidden"></img>
 }
 
+const HIDE_ICON_HOLDER = false;
+
 const projectLink = "transition-colors text-xl rounded-sm bg-blue-400/80 hover:bg-blue-700 ml-4 mb-1 px-4 py-1";
+
+let isInitialOpening = true;
 
 export default function ProjectDetailsPage({
   projectArray,
-  projectDiv,
+  selectedProject,
   useTransition,
   containerRef,
-  setProjectDiv,
-  setShowIconHolder,
+  closeProjectAction,
 }: ProjectDetailsPageProps) {
 
-  const [index, setIndex] = useState(Number(projectDiv.dataset.id));
+  if (selectedProject == null) return <></>;
+
   const [startTransition, setStartTransition] = useState(false);
-  const [isInitialOpening, setIsInitialOpening] = useState(true);
   const pageContentRef = useRef<HTMLDivElement>(null!);
   const projectImgRef = useRef<HTMLImageElement>(null!);
   const projectDetailsContainerRef = useRef<HTMLDivElement>(null!);
@@ -46,55 +49,75 @@ export default function ProjectDetailsPage({
         const { top: mainTop } = containerRef.current.getBoundingClientRect();
         window.scrollTo({top: mainTop + window.scrollY, left: 0, behavior: "instant"});
       }
-      setIsInitialOpening(false);
+      isInitialOpening = false;
+    }
+    
+    return () => {
+      isInitialOpening = true;
     }
   }, [])
 
+  const index = selectedProject.idx;
   const limit = projectArray.length;
   const project = projectArray[index];
-
   const prevIndex = (index + limit - 1) % limit;
   const nextIndex = (index + 1) % limit;
 
-  let containerProps = "", mainImgProps = "";
+  let 
+    containerProps = "", 
+    mainImgProps = "",
+    startWithControlsEnabled = true;
 
-  if (isInitialOpening && useTransition) {
-    containerProps = "project_delayed_fadein absolute";
-    mainImgProps = "invisible";
+
+  if (isInitialOpening) {
+
+    // Note: we abandon the transition if we couldn't 
+    // find a ProjectIcon div to transition from
+    if (useTransition && selectedProject.div != null) {
+      containerProps = "project_delayed_fadein absolute";
+      mainImgProps = "invisible";
+      startWithControlsEnabled = false;
+
+      selectedProject.div.onanimationend = (e) => {
+        if (e.target instanceof HTMLElement) {
+          e.target.classList.remove("thumbnail_remain_then_remove");
+          e.target.onanimationend = null;
+        }
+      }
+      selectedProject.div.classList.add("thumbnail_remain_then_remove");
+      
+    }
+    else {
+      useTransition = false;
+      containerProps = "", 
+      mainImgProps = "",
+      startWithControlsEnabled = true;
+      if (HIDE_ICON_HOLDER) selectedProject?.hideIconsAction();
+    }
   }
 
-  // Callback on end of transition, if it was started
   function onTransitionEnd() {
     projectDetailsContainerRef.current.style.position = "static";
-    setIsInitialOpening(false);
-    setShowIconHolder(false);
+    isInitialOpening = false;
+    if (HIDE_ICON_HOLDER) selectedProject?.hideIconsAction();
     dispatcher.dispatch("enableProjectControls", true);
   }
 
-  function closeDetailsView() {
-    setShowIconHolder(true);
-    setProjectDiv(null);
-  }
-
-  console.log(isInitialOpening);
-
   function onMainImageLoad() {
     if (isInitialOpening && useTransition) setStartTransition(true);
-    // if (isInitialOpening && !useTransition) setShowIconHolder(false);
     const img1 = preloadImage(projectArray[nextIndex].imageSrc);
     const img2 = preloadImage(projectArray[prevIndex].imageSrc);
     Promise.all([img1, img2]).then(result => {
       setPreloadedImgs([result[0], result[1]]);
     })
-    
   }
 
 
   return (
     <>
-      {startTransition && 
+      {(startTransition && selectedProject.div) && 
         <ProjectTransition
-          thumbnailDiv={projectDiv} 
+          thumbnailDiv={selectedProject.div} 
           containerRef={containerRef}
           projectImgRef={projectImgRef}
           onEffectComplete={onTransitionEnd}
@@ -105,16 +128,15 @@ export default function ProjectDetailsPage({
           />}
 
       <div className={`project_details_content z-[110] inset-0
-        pt-8 px-2 items-stretch ${containerProps}`}
+        py-8 px-2 items-stretch ${containerProps}`}
         ref={projectDetailsContainerRef}>
         
         <ProjectDetailsControls
           index={{cur: index, prev: prevIndex, next: nextIndex}}
           projectArray={projectArray}
-          setIndex={setIndex}
-          enableControls={!useTransition}
+          enableControls={startWithControlsEnabled}
           pageContentRef={pageContentRef}
-          closeDetails={closeDetailsView}
+          closeDetails={closeProjectAction}
         />
 
         <div className="project_details_inner flex flex-col gap-4 items-stretch" ref={pageContentRef}>
@@ -134,7 +156,7 @@ export default function ProjectDetailsPage({
           <img 
             src={project.imageSrc}
             ref={projectImgRef} 
-            className={`details_placeholder_image w-3/4 rounded-md self-center ${mainImgProps}`} 
+            className={`details_placeholder_image w-3/4 my-8 rounded-md self-center ${mainImgProps}`} 
             onLoad={onMainImageLoad}
             width={project.imageDimensions[0] + ""}
             height={project.imageDimensions[1] + ""}
@@ -148,7 +170,7 @@ export default function ProjectDetailsPage({
             ))}
           </ul>
           
-          <div className="flex flex-col gap-4 pb-64 ">
+          <div className="flex flex-col gap-4 bg-blue-950 rounded-lg p-4">
             {project.description}
           </div>
 

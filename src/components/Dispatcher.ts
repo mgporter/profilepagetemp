@@ -6,7 +6,8 @@ export interface DispatcherMap {
   projectTypeSelected: ProjectType[];
   selectFeatured: null;
   enableProjectControls: boolean;
-  showProjectIcons: boolean;
+  // showProjectIcons: boolean;
+  projectSelected: {idx: number, div: HTMLElement | null};
 }
 
 // eslint-disable-next-line
@@ -18,7 +19,8 @@ class Dispatcher {
     projectTypeSelected: [],
     selectFeatured: [],
     enableProjectControls: [],
-    showProjectIcons: [],
+    // showProjectIcons: [],
+    projectSelected: [],
   }
   
   constructor() {}
@@ -29,7 +31,7 @@ class Dispatcher {
   }
 
   dispatch<K extends keyof DispatcherMap>(event: K, data: DispatcherMap[K]) {
-    console.log("DISPATCHER: " + event);
+    // console.log("DISPATCHER: " + event);
     this.Events[event].forEach(cb => cb(data));
   }
 

@@ -6,25 +6,22 @@ interface ProjectDetailsControlsProps {
   index: {cur: number, prev: number, next: number};
   projectArray: Project[];
   enableControls: boolean;
-  setIndex: (a: number) => void;
   pageContentRef: MutableRef<HTMLDivElement>;
   closeDetails: () => void;
 }
 
-const controlDivStyle = "group flex justify-center items-center gap-2 mini:justify-self-center \
-  mini:row-start-2 p-2 cursor-pointer rounded-xl \
-  border-2 border-transparent \
-  hover:border-yellow-200/60 active:bg-sky-300/30 "
+const controlDivStyle = "group flex justify-center items-center gap-2 mini:justify-self-stretch \
+  mini:row-start-2 p-2 cursor-pointer rounded-xl text-indigo-50/90 text-2xl transition-colors \
+  border-2 border-indigo-50/30 \
+  hover:border-yellow-200/60 hover:text-yellow-300 \
+  active:bg-sky-300/30 "
 
-const controlLabelStyle = 
-  "flex items-center gap-2 px-2 font-bold text-2xl \
-  transition-colors text-indigo-50/90 group-hover:text-yellow-300";
+const controlLabelStyle = "flex items-center gap-2 px-2 font-bold";
 
 export default function ProjectDetailsControls({
   index,
   projectArray,
   enableControls,
-  setIndex, 
   pageContentRef, 
   closeDetails}: ProjectDetailsControlsProps) {
 
@@ -64,7 +61,7 @@ export default function ProjectDetailsControls({
         }
         pageContentRef.current.classList.add(enterAction);
 
-        setIndex(newIndex);
+        dispatcher.dispatch("projectSelected", {idx: newIndex, div: null});
       }
     };
 
@@ -73,7 +70,8 @@ export default function ProjectDetailsControls({
 
   return (
     <div className={`grid grid-cols-3 gap-8 mb-16 px-8 select-none
-      md:gap-0 md:px-0 mini:grid-cols-2 mini:mb-12 mini:gap-y-4 mini:auto-rows-min
+      md:gap-0 md:px-0 
+      mini:mb-12 mini:gap-y-4 mini:auto-rows-min mini:grid-cols-2 mini:gap-x-4
       ${enabled ? " " : " pointer-events-none"}`}>
       
 
@@ -93,9 +91,9 @@ export default function ProjectDetailsControls({
       <div 
         className="group flex items-center justify-center gap-2 cursor-pointer pl-6 pr-3 rounded-xl font-bold 
           justify-self-center mini:row-start-1 mini:col-span-2 mini:w-full
-          transition-colors text-indigo-50 hover:text-orange-500 active:text-orange-500
-          active:bg-sky-300/30
-          border-2 border-transparent hover:border-orange-800"
+          transition-colors text-indigo-50 border-2 border-indigo-50/30
+          hover:text-orange-500 hover:border-orange-800
+          active:bg-sky-300/30 active:text-orange-500"
         onClick={closeDetails}>
         <span className="text-2xl">Close</span>
         <p className="text-5xl pb-2 my-[-6px]">×</p>

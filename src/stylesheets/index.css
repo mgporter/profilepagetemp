@@ -8,7 +8,14 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  --bg-gradient: radial-gradient(circle at 0% 0%, rgba(22,35,91,1) 20%, rgba(11,74,93,1) 60%, rgba(11,74,93,1) 84%, rgb(7, 50, 63) 100%);
+  --background-color: rgba(11,74,93,1);
+  
+  /* --bg-gradient: radial-gradient(circle at 0% 0%, rgba(22,35,91,1) 20%, rgba(11,74,93,1) 60%, rgba(11,74,93,1) 84%, rgb(7, 50, 63) 100%); */
+  
+  /* CHANGES HERE WILL NOT BE SAVED. THESE WILL BE SET IN setstyles.ts */
+  --main-overlay: rgba(10, 35, 68, 0.6);
+  --bg-gradient: radial-gradient(circle at 0% 0%, rgb(40, 57, 129) 20%, rgb(30, 116, 142) 60%, rgb(30, 116, 142) 84%, rgb(18, 80, 98) 100%);
+  --bg-gradient-with-overlay: radial-gradient(circle at 0% 0%, rgb(40, 57, 129) 20%, rgb(30, 116, 142) 60%, rgb(30, 116, 142) 84%, rgb(18, 80, 98) 100%);
 }
 
 /* :root.dark {
@@ -23,13 +30,13 @@ body {
   min-width: 320px;
   min-height: 100vh;
   background-color: var(--background-color);
-  background: var(--bg-gradient);
+  background-image: var(--bg-gradient);
 }
 
 .project_details_bubble {
-  /* background-color: rgba(10, 35, 68, 0.6); 6 21 40.8 */
-  background: radial-gradient(circle at 0% 0%, rgba(14.8,35,77.2,1) 20%, rgba(10.4,50.6,78,1) 60%, rgba(10.4,50.6,78,1) 84%, rgba(8.8, 41, 66, 1) 100%);
-  /* background: radial-gradient(circle at 0% 0%, rgba(22,35,91,1) 20%, rgba(11,74,93,1) 60%, rgba(11,74,93,1) 84%, rgb(7, 50, 63) 100%); */
+  background-color: var(--background-color);
+  /* background: radial-gradient(circle at 0% 0%, rgba(14.8,35,77.2,1) 20%, rgba(10.4,50.6,78,1) 60%, rgba(10.4,50.6,78,1) 84%, rgba(8.8, 41, 66, 1) 100%); */
+  background: var(--bg-gradient-with-overlay);
 }
 
 div#container {
@@ -42,7 +49,7 @@ div#container {
   grid-template-areas: "nv mn";
   grid-template-columns: 22rem auto;
   min-height: 100vh;
-  background-color: rgba(10, 35, 68, 0.6);
+  background-color: var(--main-overlay);
   /* background-image: radial-gradient(circle at bottom, rgba(23, 19, 95, 0.2) 20%, rgba(41, 14, 83, 0.2) 60%); */
 }
 

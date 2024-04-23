@@ -19,6 +19,7 @@ export default function ProjectTransitionMovingImg({
   const movingImgRef = useRef<HTMLImageElement>(null!);
 
   useEffect(() => {
+    
     const { left: imgLeft, top: imgTop, width: imgWidth, height: imgHeight } = placeholderImgRect;
 
     const placeholderCenterX = imgLeft + (imgWidth / 2) - containerRect.left;

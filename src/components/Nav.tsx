@@ -61,7 +61,7 @@ export default function Nav() {
           </a>
         </div>
         
-        <h2 className="text-xl font-bold mb-2 border-b w-full">Projects:</h2>
+        <h2 className="text-xl font-bold mb-2 border-b w-full">Filter projects:</h2>
         <ul className="flex flex-col flex-wrap text-base ml-4 w-full sm:h-[10rem]">
           <li className={project_type_selection + (active === "all" ? activeStyle : "")} onClick={() => selectProject([])}>All</li>
           <li className={project_type_selection + (active === "featured" ? activeStyle : "")} onClick={() => selectFeatured()}>Featured</li>
